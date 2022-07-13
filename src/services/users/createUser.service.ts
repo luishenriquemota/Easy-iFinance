@@ -1,4 +1,4 @@
-import { IUserCreate } from "../../interfaces/users";
+import { IUserCreate, IUserReturn } from "../../interfaces/users";
 import { AppDataSource } from "../../data-source";
  import { User } from "../../entities/user.entity";
 import bcrypt from "bcryptjs";
@@ -28,7 +28,16 @@ const createUserService = async ({
   userRepository.create(user);
   await userRepository.save(user);
 
-  return user
+  const returnUser: IUserReturn = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    birth_date: user.birth_date,
+    created_at: user.created_at,
+    updated_at: user.updated_at,
+  };
+
+  return returnUser
 };
 
 export default createUserService;
