@@ -29,15 +29,15 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @Column()
+  @Column({default:false})
   isActive: Boolean;
 
   @Column()
-  friendList_id: number;
+  friendList_id: Number;
 
   @Column()
-  ownCardList_id: number;
+  ownCardList_id: Number;
 
   @Column()
-  allowedCardList_id: number;
+  allowedCardList_id: Number;
 }
