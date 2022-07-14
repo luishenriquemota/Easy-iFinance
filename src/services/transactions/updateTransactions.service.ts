@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Transactions } from "../../entities/transactions.entity";
+import { AppError } from "../../errors/appError";
 import { IUpdateTransaction } from "../../interfaces/Transactions";
 
 
@@ -13,7 +14,7 @@ const updateTransactionService = async (transactions_id:string, updatedData:IUpd
     });
 
     if(!findTransaction){
-        throw new Error("Transaction not found")
+        throw new AppError( 404, "Transaction not found")
     }
     
     const updatedTransaction = {...updatedData, ...findTransaction}
