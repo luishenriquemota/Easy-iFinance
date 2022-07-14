@@ -1,11 +1,11 @@
-import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, ManyToMany, JoinTable, OneToMany} from "typeorm"
+import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, ManyToMany, JoinTable, OneToMany, PrimaryGeneratedColumn} from "typeorm"
 import { Transactions } from "./transactions.entity"
 import { User } from "./user.entity"
 
 @Entity("card")
 export class Card {
 
-  @PrimaryColumn("increment")
+  @PrimaryGeneratedColumn("increment")
   readonly id: number
 
   @Column()
@@ -29,7 +29,7 @@ export class Card {
   @UpdateDateColumn()
   updated_at: Date  
 
-  @ManyToOne(type => User, users=>users.cards, {eager:true})
+  @ManyToOne(type => User, users=>users.cards)
   Owner:User
 
   @ManyToMany(()=>User)

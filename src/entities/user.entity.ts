@@ -35,19 +35,10 @@ export class User {
 
   @Column({default:false})
   isActive: Boolean;
-
-  @Column()
-  friendList_id: Number;
-
-  @Column()
-  ownCardList_id: Number;
-
-  @Column()
-  allowedCardList_id: Number;
-
+ 
   @OneToMany(type => Card, cards => cards.Owner, {eager:true})
   cards:Card[]
-  
+
   @OneToMany(type => Transactions, transactions => transactions.user, { eager:true } )
   transactions: Transactions[]
 
