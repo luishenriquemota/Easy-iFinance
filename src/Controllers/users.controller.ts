@@ -36,7 +36,7 @@ export const loginUserController = async (req: Request, res: Response) => {
 
 export const profileUserController = async (req: Request, res: Response) => {
   try {
-    //const id = req.userId;
+    //const id = req.user.id;
 
     //const user = await profileUserService({id});
 
@@ -51,7 +51,7 @@ export const profileUserController = async (req: Request, res: Response) => {
 
 export const updateUserController = async (req: Request, res: Response) => {
   try {
-    //const id = req.userId;
+    //const id = req.user.id;
     const changes = req.body
 
     //const user = await updateUserService(id,changes);
@@ -68,7 +68,7 @@ export const updateUserController = async (req: Request, res: Response) => {
 
 export const deleteUserController = async (req: Request, res: Response) => {
   try {
-    //const id = req.userId;
+    //const id = req.user.id;
 
     //const user = await profileUserService({id});
 

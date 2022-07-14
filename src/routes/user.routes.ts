@@ -1,6 +1,5 @@
 import { Router } from "express";
 
-const routes = Router();
 
 import {
   createUserController,
@@ -10,8 +9,15 @@ import {
   updateUserController,
 } from "../Controllers/users.controller";
 
-routes.post("/users", createUserController);
-routes.post("/users/login", loginUserController);
-routes.get("/users/profile",profileUserController)
-routes.patch("/users",updateUserController)
-routes.delete("/users",deleteUserController)
+const routes = Router();
+
+export const userRoutes = () => {
+  
+  routes.post("", createUserController);
+  routes.post("/login", loginUserController);
+  routes.get("/profile",profileUserController)
+  routes.patch("",updateUserController)
+  routes.delete("",deleteUserController)
+
+  return routes
+}

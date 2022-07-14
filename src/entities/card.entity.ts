@@ -1,4 +1,6 @@
 import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, ManyToMany, JoinTable, OneToMany} from "typeorm"
+import { Transactions } from "./transactions.entity"
+import { User } from "./user.entity"
 // import User from "./user.entity"
 // import Transaction from ""
 
@@ -39,4 +41,12 @@ export class Card {
   // @JoinTable()
   // users: User[]
   
+
+    @ManyToOne(type => User, users=>users.cards, {eager:true})
+    Owner:User
+    @ManyToMany(()=>User)
+    @JoinTable()
+    allowedUsers:User[]
+    @OneToMany(type => Transactions, transactions => transactions.card, { eager:true } )
+    transactions: Transactions[]
 }
