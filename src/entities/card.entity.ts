@@ -1,8 +1,6 @@
 import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, ManyToMany, JoinTable, OneToMany} from "typeorm"
 import { Transactions } from "./transactions.entity"
 import { User } from "./user.entity"
-// import User from "./user.entity"
-// import Transaction from ""
 
 @Entity("card")
 export class Card {
@@ -29,24 +27,16 @@ export class Card {
   created_at: Date
 
   @UpdateDateColumn()
-  updated_at: Date
+  updated_at: Date  
 
-  // @ManyToOne(() => User, user => user.cards, {eager: true})
-  // card: Card
+  @ManyToOne(type => User, users=>users.cards, {eager:true})
+  Owner:User
 
-  // @OneToMany(() => Transaction, transaction => transaction.card)
-  // transactions: Transaction[]
-  
-  // @ManyToMany(() => User, user => user.cards, {eager: true})
-  // @JoinTable()
-  // users: User[]
-  
+  @ManyToMany(()=>User)
+  @JoinTable()
+  allowedUsers:User[]
 
-    @ManyToOne(type => User, users=>users.cards, {eager:true})
-    Owner:User
-    @ManyToMany(()=>User)
-    @JoinTable()
-    allowedUsers:User[]
-    @OneToMany(type => Transactions, transactions => transactions.card, { eager:true } )
-    transactions: Transactions[]
+  @OneToMany(type => Transactions, transactions => transactions.card, { eager:true } )
+  transactions: Transactions[]
+
 }
