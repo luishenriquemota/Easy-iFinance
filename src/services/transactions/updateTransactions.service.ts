@@ -11,8 +11,9 @@ const updateTransactionService = async (transactions_id:string, updatedData:IUpd
             transactions_id: transactions_id
         }
     });
+
     if(!findTransaction){
-        throw new Error("User not found")
+        throw new Error("Transaction not found")
     }
     
     const updatedTransaction = {...updatedData, ...findTransaction}

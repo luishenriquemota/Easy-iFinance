@@ -11,6 +11,7 @@ const listTransactionsService = async (user_id:string) => {
     const foundUser = await userRepository.findOneBy({
         id:user_id
     })
+    
     if(!foundUser){
         throw new Error("User not found")
     }

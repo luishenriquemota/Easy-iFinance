@@ -10,6 +10,7 @@ const listCardTransactionsService = async (card_id:number)=>{
     const foundCard = await cardRepository.findOneBy({
       id:card_id
     })
+    
     if(!foundCard){
       throw new Error("Card not found")
     }

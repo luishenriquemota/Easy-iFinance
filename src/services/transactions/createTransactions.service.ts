@@ -29,7 +29,7 @@ const createTransactionsService = async ({description,card_id,category,value, ty
     const isAllowedTransaction = foundCard.allowedUsers.find( user => user.id === foundUser.id) || foundCard.Owner.id === foundUser.id
 
     if(!isAllowedTransaction){
-        throw new Error("User not authorized to register this transaction")
+        throw new Error("User is not authorized to register this transaction")
     }
 
     const newTransaction = transactionsRepository.create({
