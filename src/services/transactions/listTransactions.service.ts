@@ -1,14 +1,22 @@
 import { AppDataSource } from "../../data-source";
 import { Transactions } from "../../entities/transactions.entity";
+import { User } from "../../entities/user.entity";
 
 
 
 const listTransactionsService = async (user_id:string) => {
     const transactionsRepository = AppDataSource.getRepository(Transactions)
-
-    const userTransactions = transactionsRepository.find({
+    const userRepository = AppDataSource.getRepository(User)
+    
+    const foundUser = await userRepository.findOneBy({
+        id:user_id
+    })
+    if(!foundUser){
+        throw new Error("User not found")
+    }
+    const userTransactions = await transactionsRepository.find({
          where:{
-            user:user_id
+            user:foundUser
          }
        
     })    

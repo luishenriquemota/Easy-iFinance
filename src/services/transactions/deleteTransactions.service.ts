@@ -14,6 +14,7 @@ const deleteTransactionService = async (transactions_id:string) => {
         throw new Error("User not found")
     }
 
+    
     await transactionsRepository.delete(transactions_id)
     
 }
