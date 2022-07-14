@@ -21,14 +21,13 @@ const listOneFriendService = async (friend_id: string, user_id: string) => {
   //       throw new Error("Friend not found")
   //   }
   // const friend = await friendlist.find({
-  //   where: {
+  //   where: [{
   //       friend_1: friendById.id
   //       friend_2: userById.id
-  //   }
-  //   || {
+  //   },{
   //       friend_1: userById.id
   //       friend_2: friendById.id
-  //   }
+  //   }]
   // })
   // if(!friend) {
   //     throw new Error("Users are not friends")

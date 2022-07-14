@@ -17,15 +17,15 @@ const deleteFriendService = async (friend_id: string, user_id: string) => {
   //           id: friend_id,
   //       },
   //     })
-  //     const friendship = await friendlist.find({
-  //             where: {
-  //                 friend_1: userById.id,
-  //                 friend_2: friendById.id,
-  //             } || {
-  //                 friend_1: friendById.id,
-  //                 friend_2: userById.id,
-  //             }
-  //           })
+  // const friendship = await friendlist.find({
+  //         where: [{
+  //             friend_1: userById.id,
+  //             friend_2: friendById.id,
+  //         },{
+  //             friend_1: friendById.id,
+  //             friend_2: userById.id,
+  //         }]
+  //       })
   //     if(!friendship) {
   //         throw new Error("Friendship not found")
   //     }

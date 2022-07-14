@@ -27,15 +27,15 @@ const verifyFriendshipAlreadyExists = async (
   // if(!friendById) {
   //     throw new Error("Desired friend not found")
   // }
-  //   const verifyFriendship = await friendlist.find({
-  //     where: {
-  //         friend_1: myId,
-  //         friend_2: user_id,
-  //     } || {
-  //         friend_1: user_id,
-  //         friend_2: myId,
-  //     }
-  //   })
+  // const verifyFriendship = await friendlist.find({
+  //   where: [{
+  //       friend_1: myId,
+  //       friend_2: user_id,
+  //   },{
+  //       friend_1: user_id,
+  //       friend_2: myId,
+  //   }]
+  // })
   //   if(verifyFriendship) {
   //     throw new Error("Users are already friends")
   //   }
