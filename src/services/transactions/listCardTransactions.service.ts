@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Card } from "../../entities/card.entity";
 import { Transactions } from "../../entities/transactions.entity";
 
-const listCardTransactionsService = async (card_id:number)=>{
+const listCardTransactionsService = async (card_id:string)=>{
     const transactionsRepository = AppDataSource.getRepository(Transactions)
    
     const cardRepository = AppDataSource.getRepository(Card)
@@ -10,7 +10,7 @@ const listCardTransactionsService = async (card_id:number)=>{
     const foundCard = await cardRepository.findOneBy({
       id:card_id
     })
-    
+
     if(!foundCard){
       throw new Error("Card not found")
     }

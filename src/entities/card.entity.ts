@@ -8,7 +8,7 @@ import { User } from "./user.entity";
 
 export class Card{
     @PrimaryGeneratedColumn('increment')
-    id:number
+    id:string
     @Column()
     name:string
     @Column()
@@ -24,12 +24,10 @@ export class Card{
     @Column()
     type:string
     @ManyToOne(type => User, users=>users.cards, {eager:true})
-    user:User
+    Owner:User
     @ManyToMany(()=>User)
     @JoinTable()
     allowedUsers:User[]
-
-
     @OneToMany(type => Transactions, transactions => transactions.card, { eager:true } )
     transactions: Transactions[]
 }

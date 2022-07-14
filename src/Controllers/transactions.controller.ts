@@ -32,17 +32,17 @@ export const listCardTransactionsController = async  (req:Request, res:Response)
 
 export const updateTransactionsController = async (req:Request, res:Response) =>{
     const updatedData = req.body
-    const {id}  = req.params
+    const {transaciton_id}  = req.params
 
-    const updatedTransaction = await updateTransactionService(id,updatedData)
+    const updatedTransaction = await updateTransactionService(transaciton_id,updatedData)
 
     return res.status(200).json(updatedTransaction)
 }
 
 export const deleteTransactionsController = async (req:Request, res:Response)=>{
-    const {transacitons_id} = req.params
+    const {transaciton_id} = req.params
 
-    await deleteTransactionService(transacitons_id)
+    await deleteTransactionService(transaciton_id)
 
     return res.status(204).json({message:"Transaction deleted with success"})
 }
