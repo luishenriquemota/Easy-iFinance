@@ -11,7 +11,7 @@ const createTransactionsService = async ({description,card_id,category,value, ty
     const cardRepository = AppDataSource.getRepository(Card)
     const userRepository = AppDataSource.getRepository(User)
     const foundCard = await cardRepository.findOneBy({
-      id:card_id
+      id: Number(card_id)
     })
 
     if(!foundCard){
@@ -19,7 +19,7 @@ const createTransactionsService = async ({description,card_id,category,value, ty
     }
 
     const foundUser = await userRepository.findOneBy({
-        id:users_id
+        id: users_id
     })
 
     if(!foundUser){

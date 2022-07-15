@@ -3,26 +3,27 @@ import { Card } from "../../entities/card.entity";
 import { Transactions } from "../../entities/transactions.entity";
 
 const listCardTransactionsService = async (card_id:string)=>{
-    const transactionsRepository = AppDataSource.getRepository(Transactions)
-   
-    const cardRepository = AppDataSource.getRepository(Card)
-   
-    const foundCard = await cardRepository.findOneBy({
-      id:card_id
-    })
+  const transactionsRepository = AppDataSource.getRepository(Transactions)
+  
+  const cardRepository = AppDataSource.getRepository(Card)
+  
+  const foundCard = await cardRepository.findOneBy({
+    id: parseInt(card_id)
+  })
 
-    if(!foundCard){
-      throw new Error("Card not found")
-    }
+  if(!foundCard){
+    throw new Error("Card not found")
+  }
 
-    const foundTransactions = await transactionsRepository.find({
-      where:{
-         card:foundCard
-      } 
-    })
+  const allTransactions = await transactionsRepository.find()
 
-    
-   return foundTransactions 
+  const cardTransactions = allTransactions.filter((transaction) => transaction.card.id === parseInt(card_id))
+  
+  if (cardTransactions.length === 0) {
+    throw new Error("Card not found")
+  }
+  
+  return cardTransactions 
 }
 
 export default listCardTransactionsService

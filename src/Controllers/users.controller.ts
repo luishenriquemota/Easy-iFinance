@@ -5,78 +5,78 @@ import profileUserService from "../services/users/profileUser.service";
 import updateUserService from "../services/users/updateUser.service";
 
 export const createUserController = async (req: Request, res: Response) => {
-  try {
+  
     const { name, email, password, birth_date } = req.body;
 
     const newUser = await createUserService({ name, email, password, birth_date });
 
-    return res.status(201).send(newUser);
-  }  catch (err) {
+    return res.status(201).json(newUser);
+  
     //   if (err instanceof //AppError) {
     //     handleError(err, res)
     //     ;
     //   }
-    }
+   
 };
 
 export const loginUserController = async (req: Request, res: Response) => {
-  try {
+  
     const { email, password } = req.body;
 
     const token = await loginUserService({ email, password });
 
-    return res.status(200).send(token);
-  } catch (err) {
+    return res.status(200).json({token});
+  
   //   if (err instanceof //AppError) {
   //     handleError(err, res)
   //     ;
   //   }
-  }
+  
 };
 
 export const profileUserController = async (req: Request, res: Response) => {
-  try {
+  
     //const id = req.user.id;
 
     //const user = await profileUserService({id});
 
     //return res.status(200).send(user);
-  } catch (err) {
+  
   //   if (err instanceof //AppError) {
   //     handleError(err, res)
   //     ;
   //   }
-  }
+  
 };
 
 export const updateUserController = async (req: Request, res: Response) => {
-  try {
+  
     //const id = req.user.id;
     const changes = req.body
 
     //const user = await updateUserService(id,changes);
 
     //return res.status(200).send(user);
-  } catch (err) {
+  
   //   if (err instanceof //AppError) {
   //     handleError(err, res)
   //     ;
   //   }
-  }
+  
 };
 
 
 export const deleteUserController = async (req: Request, res: Response) => {
-  try {
+  
     //const id = req.user.id;
 
     //const user = await profileUserService({id});
 
     //return res.status(200).send(user);
-  } catch (err) {
+  
   //   if (err instanceof //AppError) {
   //     handleError(err, res)
   //     ;
   //   }
-  }
+  
 };
