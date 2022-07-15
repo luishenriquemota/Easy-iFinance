@@ -44,6 +44,9 @@ const createTransactionsService = async ({description,card_id,category,value, ty
 
     await transactionsRepository.save(newTransaction)
 
+
+    
+
     return newTransaction
 }
 
