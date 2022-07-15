@@ -22,27 +22,36 @@ const createCardService = async (ownerId: string, {name, limit, type, dueDate, c
   }
 
 
-  const newCard = {
+  const newCard = new Card
+
+  newCard.Owner = user
+
+  newCard.allowedUsers = []
+
+  newCard.closingDate = closingDate
+  
+  newCard.dueDate = dueDate
+
+  newCard.limit = limit
+
+  newCard.name = name
+
+  newCard.type = type
+  console.log(newCard)
+  const returningUser = {
+    id:newCard.id,
     name,
     limit,
     type,
     dueDate,
     closingDate,
     ownerId,
-    allowedUsers: []
+    allowedUsers: [],
   }
 
-  await cardRepository.save({
-    name,
-    limit,
-    type,
-    dueDate,
-    closingDate,
-    Owner: user,
-    allowedUsers: []
-  })
+  await cardRepository.save(newCard)
 
-  return newCard
+  return returningUser
 
 }  
 

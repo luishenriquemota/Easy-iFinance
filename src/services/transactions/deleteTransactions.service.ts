@@ -1,8 +1,9 @@
 import { AppDataSource } from "../../data-source";
 import { Transactions } from "../../entities/transactions.entity";
+import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors/appError";
 
-const deleteTransactionService = async (transactions_id:string) => {
+const deleteTransactionService = async (foundUser:User,transactions_id:string) => {
     const transactionsRepository = AppDataSource.getRepository(Transactions)
 
     const findTransaction = await transactionsRepository.findOne({ 
@@ -10,9 +11,12 @@ const deleteTransactionService = async (transactions_id:string) => {
             transactions_id: transactions_id
         }
     });
-    
-    if(!findTransaction){
-        throw new AppError(404,"User not found")
+
+    const isUserTransaction = foundUser.transactions?.filter(transaction=> {
+        return transaction.transactions_id.toString() === transactions_id})
+        
+    if(!findTransaction || !isUserTransaction){
+        throw new AppError( 404, "Transaction not found")
     }
 
     
