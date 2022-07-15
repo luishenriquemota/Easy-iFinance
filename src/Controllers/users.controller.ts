@@ -5,78 +5,47 @@ import profileUserService from "../services/users/profileUser.service";
 import updateUserService from "../services/users/updateUser.service";
 
 export const createUserController = async (req: Request, res: Response) => {
-  try {
-    const { name, email, password, birth_date } = req.body;
+  const { name, email, password, birth_date } = req.body;
 
-    const newUser = await createUserService({ name, email, password, birth_date });
+  const newUser = await createUserService({
+    name,
+    email,
+    password,
+    birth_date,
+  });
 
-    return res.status(201).send(newUser);
-  }  catch (err) {
-    //   if (err instanceof //AppError) {
-    //     handleError(err, res)
-    //     ;
-    //   }
-    }
+  return res.status(201).send(newUser);
 };
 
 export const loginUserController = async (req: Request, res: Response) => {
-  try {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    const token = await loginUserService({ email, password });
+  const token = await loginUserService({ email, password });
 
-    return res.status(200).send(token);
-  } catch (err) {
-  //   if (err instanceof //AppError) {
-  //     handleError(err, res)
-  //     ;
-  //   }
-  }
+  return res.status(200).send(token);
 };
 
 export const profileUserController = async (req: Request, res: Response) => {
-  try {
-    //const id = req.user.id;
+  const id = req.user.id;
 
-    //const user = await profileUserService({id});
+  const user = await profileUserService(id);
 
-    //return res.status(200).send(user);
-  } catch (err) {
-  //   if (err instanceof //AppError) {
-  //     handleError(err, res)
-  //     ;
-  //   }
-  }
+  return res.status(200).send(user);
 };
 
 export const updateUserController = async (req: Request, res: Response) => {
-  try {
-    //const id = req.user.id;
-    const changes = req.body
+  const id = req.user.id;
+  const changes = req.body;
 
-    //const user = await updateUserService(id,changes);
+  const user = await updateUserService(id, changes);
 
-    //return res.status(200).send(user);
-  } catch (err) {
-  //   if (err instanceof //AppError) {
-  //     handleError(err, res)
-  //     ;
-  //   }
-  }
+  return res.status(200).send(user);
 };
 
-
 export const deleteUserController = async (req: Request, res: Response) => {
-  try {
-    //const id = req.user.id;
+  const id = req.user.id;
 
-    //const user = await profileUserService({id});
+  const user = await profileUserService(id);
 
-    //return res.status(200).send(user);
-  } catch (err) {
-  //   if (err instanceof //AppError) {
-  //     handleError(err, res)
-  //     ;
-  //   }
-  }
+  return res.status(200).send(user);
 };
