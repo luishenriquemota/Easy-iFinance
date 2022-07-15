@@ -32,6 +32,7 @@ const createTransactionsService = async ({description,card_id,category,value, ty
     if(!isAllowedTransaction){
         throw new AppError( 403, "User is not authorized to register this transaction")
     }
+    
 
     const newTransaction = transactionsRepository.create({
         description,
