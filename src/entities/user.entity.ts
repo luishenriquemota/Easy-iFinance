@@ -8,7 +8,6 @@ import {
 } from "typeorm";
 import { Card } from "./card.entity";
 import { Transactions } from "./transactions.entity";
-import { v4 as uuidv4 } from "uuid";
 
 @Entity()
 export class User {
@@ -22,7 +21,7 @@ export class User {
   email: string;
 
   @Column()
-  password: string;
+  password?: string;
 
   @Column()
   birth_date: Date;
@@ -33,20 +32,15 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @Column({default:false})
+  @Column({default:true})
   isActive: Boolean;
  
   @OneToMany(type => Card, cards => cards.Owner, {eager:true})
-  cards:Card[]
+  cards?:Card[]
 
   @OneToMany(type => Transactions, transactions => transactions.user, { eager:true } )
-  transactions: Transactions[]
+  transactions?: Transactions[]
 
-  constructor(){
-      if(!this.id){
-          this.id = uuidv4()
-    }
-  }
 }
 
 

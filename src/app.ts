@@ -9,9 +9,9 @@ const app = express()
 
 app.use(express.json())
 
-app.use(errorMiddleware)
-
 appRoutes(app)
+
+app.use(errorMiddleware)
 
 const port = process.env.PORT || 3001
 app.listen(port, () => {

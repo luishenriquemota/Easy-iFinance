@@ -1,6 +1,6 @@
 import { IUserCreate, IUserReturn } from "../../interfaces/users";
 import { AppDataSource } from "../../data-source";
-import { User } from "../../entities/user.entity";
+ import { User } from "../../entities/user.entity";
 import bcrypt from "bcryptjs";
 import { AppError } from "../../errors/appError";
 
@@ -17,13 +17,13 @@ const createUserService = async ({
   const emailAlreadyExists = users.find((user) => user.email === email);
 
   if (emailAlreadyExists) {
-    throw new AppError(409, "email already exists");
+    throw new AppError(400, "Email already exists");
   }
 
   const user = new User();
   user.name = name;
   user.email = email;
-  user.password = bcrypt.hashSync(password, 10);
+  user.password! = bcrypt.hashSync(password, 10);
   user.birth_date = birth_date;
 
   userRepository.create(user);
@@ -38,7 +38,7 @@ const createUserService = async ({
     updated_at: user.updated_at,
   };
 
-  return returnUser;
+  return returnUser
 };
 
 export default createUserService;

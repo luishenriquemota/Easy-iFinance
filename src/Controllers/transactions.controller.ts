@@ -7,8 +7,9 @@ import updateTransactionService from "../services/transactions/updateTransaction
 
 export const createTransactionsController = async (req:Request, res:Response) =>{
     const userData = req.body
+    const user_id = req.user.id
 
-    const newUser = await createTransactionsService(userData)
+    const newUser = await createTransactionsService({user_id , ...userData})
 
     return res.status(201).json(newUser)
 }

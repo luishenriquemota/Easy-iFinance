@@ -4,7 +4,6 @@ export interface ICardCreate {
   type: string
   dueDate: Date
   closingDate: Date
-  ownerId: string
 }
 
 export interface ICardUpdate {
