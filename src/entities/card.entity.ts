@@ -32,9 +32,8 @@ export class Card {
   @ManyToOne(type => User, users=>users.cards)
   Owner:User
 
-  @ManyToMany(()=>User, {
-    eager:true
-  })@JoinTable()
+  @ManyToMany(()=>User)
+  @JoinTable()
   allowedUsers:User[]
 
   @OneToMany(type => Transactions, transactions => transactions.card, { eager:true } )

@@ -18,8 +18,8 @@ const authToken = (req: Request, res: Response, next: NextFunction) => {
     }
 
     req.user = {
-      id: decoded.id
-    }
+      id: decoded.id,
+  }
 
     next()
 

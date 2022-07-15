@@ -1,36 +1,24 @@
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/user.entity";
+import { AppError } from "../../errors/appError";
 import { IUserUpdated } from "../../interfaces/users";
 import bcrypt from "bcryptjs";
-import { AppError } from "../../errors/appError";
 
-const updateUserService = async (id: string, changes: IUserUpdated) => {
+const updateUserService = async (id: string, changes: IUserUpdated): Promise<User> => {
   const userRepository = AppDataSource.getRepository(User);
 
-  const users = await userRepository.find();
+  const user = await userRepository.findOneBy({id: id})
 
-  const account = users.find((user) => user.id === id);
-
-  if (!account) {
-    throw new AppError(404, "User dont exists");
+  if (!user) {
+    throw new AppError(404, "User dont exists")
   }
 
-  const user = new User();
-  user.name = changes.name ? changes.name : account.name;
-  user.email = changes.email ? changes.email : account.email;
-  user.password = changes.password
-    ? bcrypt.hashSync(changes.password, 10)
-    : account.password;
+  user.name = changes.name ? changes.name : user.name;
+  user.email = changes.email ? changes.email : user.email;
+  user.password = changes.password ? bcrypt.hashSync(changes.password, 10) : user.password;
+  
+  await userRepository.save(user)
 
-  await userRepository.update(id, {
-    name: user.name,
-    email: user.email,
-    password: user.password,
-  });
-
-  const accountUpdated = users.find((user) => user.id === id);
-
-  return accountUpdated;
+  return {... user, password: undefined, cards: undefined, transactions:undefined};
 };
-
 export default updateUserService;

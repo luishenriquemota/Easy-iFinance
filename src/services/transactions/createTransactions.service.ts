@@ -26,6 +26,7 @@ const createTransactionsService = async ({description,card_id,category,value, ty
     if(!foundUser){
         throw new AppError( 404, "User not exists")
     }
+    console.log(foundCard)
 
     const isAllowedTransaction = foundCard.allowedUsers.find( user => user.id === foundUser.id) || foundCard.Owner.id === foundUser.id
 
