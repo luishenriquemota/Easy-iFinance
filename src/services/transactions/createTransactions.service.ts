@@ -33,22 +33,25 @@ const createTransactionsService = async ({description,card_id,category,value, ty
         throw new AppError( 403, "User is not authorized to register this transaction")
     }
     
-
-    const newTransaction = transactionsRepository.create({
-        description,
-        category,
-        value,
-        type,
-        card:foundCard,
-        user:foundUser
-    })
-
+    const newTransaction = new Transactions
+    newTransaction.description = description
+    newTransaction.category = category
+    newTransaction.value = value
+    newTransaction.type =type
+    newTransaction.card = foundCard
+    newTransaction.user = foundUser
+   
     await transactionsRepository.save(newTransaction)
 
-
-    
-
-    return newTransaction
+    const returingTransaction = {
+        transactions_id: newTransaction.transactions_id,
+        description: newTransaction.description,
+        value: newTransaction.value,
+        type: newTransaction.type,
+        cardId: newTransaction.card.id,
+        userId: newTransaction.user.id
+    } 
+    return returingTransaction
 }
 
 export default createTransactionsService
