@@ -8,7 +8,7 @@ import updateCardService from "../services/cards/updateCard.service";
 export const createCardController = async (req: Request, res: Response) => {
   const {name, limit, type, dueDate, closingDate} = req.body
   const ownerId = req.user.id
-  console.log(ownerId)
+ 
 
   const card = await createCardService(ownerId, {name, limit, type, dueDate, closingDate})
 

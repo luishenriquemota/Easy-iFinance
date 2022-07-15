@@ -28,3 +28,7 @@ export interface IUserReturn {
   ownCardList_id?: Number;
   allowedCardList_id?: Number;
 }
+
+export interface Idecoded {
+  id:string
+}

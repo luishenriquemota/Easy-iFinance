@@ -37,7 +37,7 @@ const createCardService = async (ownerId: string, {name, limit, type, dueDate, c
   newCard.name = name
 
   newCard.type = type
-  console.log(newCard)
+  
   const returningUser = {
     id:newCard.id,
     name,
