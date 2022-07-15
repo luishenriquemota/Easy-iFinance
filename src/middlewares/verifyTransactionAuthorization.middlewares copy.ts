@@ -12,7 +12,7 @@ const verifyUserCardRelation = async (
     const {foundCard, foundUser} =req.user
 
     if(foundCard && foundUser){
-     const userCard = foundUser.cards?.filter(card => card.id === req.user.foundCard.id)
+     const userCard = foundUser.cards?.filter(card => card.id === req.user.foundCard!.id)
         if(!userCard) {
             return new AppError( 403, "This Card is not associated to the user")
         }

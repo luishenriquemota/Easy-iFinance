@@ -7,8 +7,8 @@ declare global {
     interface Request {
       user: {
           id: string,
-          foundUser: User,
-          foundCard: Card,
+          foundUser?: User,
+          foundCard?: Card,
       }
     }
   }
