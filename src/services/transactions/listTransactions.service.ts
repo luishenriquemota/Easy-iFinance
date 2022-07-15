@@ -17,11 +17,10 @@ const listTransactionsService = async (user_id:string) => {
         throw new AppError(404,"User not found")
     }
 
-    const allTransactions = await transactionsRepository.find()
 
-    const userTransactions = allTransactions.filter(transaction => transaction.user.id === user_id)
+    const userTransactions = foundUser.transactions
 
-    if(userTransactions.length === 0){
+    if(userTransactions?.length === 0){
         throw new AppError( 400, "User don't have transactions")
     }
 

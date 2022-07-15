@@ -7,25 +7,25 @@ import updateTransactionService from "../services/transactions/updateTransaction
 
 export const createTransactionsController = async (req:Request, res:Response) =>{
     const userData = req.body
-    const user_id = req.user.id
+    const {foundUser, foundCard } = req.user
 
-    const newUser = await createTransactionsService({user_id , ...userData})
+    const newUser = await createTransactionsService(foundUser,foundCard, userData)
 
     return res.status(201).json(newUser)
 }
 
 export const listTransactionsController = async  (req:Request, res:Response)=>{
-    const {user_id} = req.params
+    const {id} = req.user
 
-    const userTransactions = await listTransactionsService(user_id)
+    const userTransactions = await listTransactionsService(id)
 
     return res.status(200).json(userTransactions)
     
 }
 export const listCardTransactionsController = async  (req:Request, res:Response)=>{
-    const {card_id} = req.params
+    const {foundCard} = req.user
 
-    const cardTransactions = await listCardTransactionsService(card_id)
+    const cardTransactions = await listCardTransactionsService(foundCard)
 
     return res.status(200).json(cardTransactions)
     
@@ -33,17 +33,19 @@ export const listCardTransactionsController = async  (req:Request, res:Response)
 
 export const updateTransactionsController = async (req:Request, res:Response) =>{
     const updatedData = req.body
-    const {transaciton_id}  = req.params
+    const {transaction_id}  = req.params
+    const { foundUser} = req.user
 
-    const updatedTransaction = await updateTransactionService(transaciton_id,updatedData)
+    const updatedTransaction = await updateTransactionService(foundUser,transaction_id,updatedData)
 
     return res.status(200).json(updatedTransaction)
 }
 
 export const deleteTransactionsController = async (req:Request, res:Response)=>{
-    const {transaciton_id} = req.params
+    const {transaction_id} = req.params
+    const { foundUser} = req.user
 
-    await deleteTransactionService(transaciton_id)
+    await deleteTransactionService(foundUser,transaction_id)
 
-    return res.status(204).json({message:"Transaction deleted with success"})
+    return res.status(204)
 }
