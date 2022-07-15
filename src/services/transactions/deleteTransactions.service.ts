@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Transactions } from "../../entities/transactions.entity";
+import { AppError } from "../../errors/appError";
 
 const deleteTransactionService = async (transactions_id:string) => {
     const transactionsRepository = AppDataSource.getRepository(Transactions)
@@ -11,7 +12,7 @@ const deleteTransactionService = async (transactions_id:string) => {
     });
     
     if(!findTransaction){
-        throw new Error("User not found")
+        throw new AppError(404,"User not found")
     }
 
     

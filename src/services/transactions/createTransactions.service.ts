@@ -2,6 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Card } from "../../entities/card.entity";
 import { Transactions } from "../../entities/transactions.entity";
 import { User } from "../../entities/user.entity";
+import { AppError } from "../../errors/appError";
 import { ITransaction } from "../../interfaces/Transactions";
 
 
@@ -11,11 +12,11 @@ const createTransactionsService = async ({description,card_id,category,value, ty
     const cardRepository = AppDataSource.getRepository(Card)
     const userRepository = AppDataSource.getRepository(User)
     const foundCard = await cardRepository.findOneBy({
-      id:card_id
+      id:parseInt(card_id)
     })
 
     if(!foundCard){
-        throw new Error("Card not exists")
+        throw new AppError( 404 , "Card not exists")
     }
 
     const foundUser = await userRepository.findOneBy({
@@ -23,14 +24,15 @@ const createTransactionsService = async ({description,card_id,category,value, ty
     })
 
     if(!foundUser){
-        throw new Error("User not exists")
+        throw new AppError( 404, "User not exists")
     }
 
     const isAllowedTransaction = foundCard.allowedUsers.find( user => user.id === foundUser.id) || foundCard.Owner.id === foundUser.id
 
     if(!isAllowedTransaction){
-        throw new Error("User is not authorized to register this transaction")
+        throw new AppError( 403, "User is not authorized to register this transaction")
     }
+    
 
     const newTransaction = transactionsRepository.create({
         description,
@@ -42,6 +44,9 @@ const createTransactionsService = async ({description,card_id,category,value, ty
     })
 
     await transactionsRepository.save(newTransaction)
+
+
+    
 
     return newTransaction
 }
