@@ -1,28 +1,30 @@
 import { AppDataSource } from "../../data-source";
-//import da Entity User
-//import da Entity Friendlist
+import { User } from "../../entities/user.entity";
+import { Friendlist } from "../../entities/friendlist.entity";
+import { AppError } from "../../errors/appError";
 
 const addFriendService = async (friend_id: string, user_id: string) => {
-  // const userRepository = AppDataSource.getRepository(User);
-  // const friendlistRepository = AppDataSource.getRepository(Friendlist);
-  // const user = await userRepository.find();
-  // const friendlist = await friendlistRepository.find()
-  // const userById = await user.find({
-  //     where: {
-  //       id: user_id,
-  //     },
-  //   })
-  // const friendById = await user.find({
-  //     where: {
-  //         id: friend_id,
-  //     },
-  //   })
-  // const friendship = new Friendlist()
-  // friendship.friend_1: userById.id
-  // friendship.friend_2: friendById.id
-  // friendlistRepository.create(friendship)
-  // await friendlistRepository.save(friendship)
-  // return friendById.name
+  const userRepository = AppDataSource.getRepository(User);
+  const friendlistRepository = AppDataSource.getRepository(Friendlist);
+
+  const userById = await userRepository.findOneBy({
+    id: user_id,
+  });
+
+  const friendById = await userRepository.findOneBy({
+    id: friend_id,
+  });
+  if (!userById || !friendById) {
+    throw new AppError(409, "User not found");
+  }
+
+  const friendship = new Friendlist();
+  friendship.user1.id = user_id;
+  friendship.user2.id = friend_id;
+  friendlistRepository.create(friendship);
+  await friendlistRepository.save(friendship);
+
+  return friendById?.name;
 };
 
 export default addFriendService;

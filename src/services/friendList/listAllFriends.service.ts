@@ -1,28 +1,25 @@
 import { AppDataSource } from "../../data-source";
-//import da Entity User
-//import da Entity Friendlist
+import { User } from "../../entities/user.entity";
+import { Friendlist } from "../../entities/friendlist.entity";
+import { AppError } from "../../errors/appError";
 
 const listAllFriendsService = async (user_id: string) => {
-  //   const userRepository = AppDataSource.getRepository(User);
-  //   const friendlistRepository = AppDataSource.getRepository(Friendlist);
-  //   const user = await userRepository.find();
-  //   const friendlist = await friendlistRepository.find()
-  //   const userById = await user.find({
-  //       where: {
-  //         id: user_id,
-  //       },
-  //     })
-  //     if(!userById) {
-  //         throw new Error("User not found")
-  //     }
-  // const friends = await friendlist.find({
-  //   where: [{
-  //       friend_1: userById.id
-  //   }, {
-  //       friend_2: userById.id
-  //   }]
-  // })
-  //   return friends
+  const userRepository = AppDataSource.getRepository(User);
+  const friendlistRepository = AppDataSource.getRepository(Friendlist);
+  const friendlist = await friendlistRepository.find();
+
+  const userById = await userRepository.findOneBy({
+    id: user_id,
+  });
+
+  if (!userById) {
+    throw new AppError(409, "User not found");
+  }
+
+  const friendship = friendlist.filter(
+    (line) => line.user1.id === user_id || line.user2.id === user_id
+  );
+  return friendship;
 };
 
 export default listAllFriendsService;
