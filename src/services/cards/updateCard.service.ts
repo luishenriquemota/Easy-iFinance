@@ -14,19 +14,20 @@ const updateCardService = async (id: string, card_id: string, updateData:ICardUp
   if (!user) {
     throw new AppError(404, "User not found")
   }
+
+  
   
   const card = await cardRepository.findOneBy({id: Number(card_id)})
   
   if (!card) {
     throw new AppError(404, "Card not found")
-  }
+  } 
   
+  updateData.updated_at = new Date()
   
-  const updateCard = {...updateData, ...card}
-  updateCard.updated_at = new Date()
- 
+  const updateCard = {...card, ...updateData}
 
-  await cardRepository.update(updateCard.id, updateCard)
+  await cardRepository.update(updateCard.id, updateData)
   return updateCard
 }
 
