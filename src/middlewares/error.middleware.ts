@@ -14,6 +14,7 @@ export const errorMiddleware = (err: Error, req: Request, res: Response, _: Next
   });
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
   console.log(`${err} => ERRO LOG`)
   return response.status(500).json({
   status: "error",
@@ -21,6 +22,9 @@ export const errorMiddleware = (err: Error, req: Request, res: Response, _: Next
   message: "Internal server error",
 =======
   console.log(err)
+=======
+
+>>>>>>> a94c615f01b2530ed3798c0c5cdf0633a47f40b1
   return res.status(500).json({
   message: "Internal server error"
 >>>>>>> develop
