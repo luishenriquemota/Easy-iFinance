@@ -16,8 +16,8 @@ const verifyUserCardRelation = async (
         if(!userCard) {
             return new AppError( 403, "This Card is not associated to the user")
         }
+        
     }
-
     next()
 
 };
