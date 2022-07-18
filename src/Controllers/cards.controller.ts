@@ -27,7 +27,6 @@ export const listCardController = async (req: Request, res: Response) => {
   return res.status(200).json(card)
 }
 
-
 export const listOneCardController = async (req: Request, res: Response) => {
   const {card_id} = req.params
   // const {id} = req.body => user
