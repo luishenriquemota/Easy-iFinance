@@ -12,7 +12,7 @@ const loginUserService =async ({email,password} : IUserLogin) => {
     const users = await userRepository.find();
 
     const account = users.find((user) => user.email === email);
-    console.log(account); 
+    
     if (!account) {
         throw new AppError(404, "Account not found")
       }
