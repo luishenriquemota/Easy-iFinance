@@ -168,7 +168,7 @@ Content-type: application/json
     - [POST - /users](#11-criação-de-usuário)
     - [POST - /users/login](#12-login-de-usuário)
     - [GET - /users/profile](#13-listando-usuário)
-	  - [PATCH - /users](#14-atualizar-usuário)
+    - [PATCH - /users](#14-atualizar-usuário)
     - [DELETE - /users](#15-deletar-usuário)
 - [Cards](#2-cards)
     - [POST - /cards](#21-criação-de-cards)
