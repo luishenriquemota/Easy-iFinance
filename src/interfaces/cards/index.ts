@@ -13,4 +13,5 @@ export interface ICardUpdate {
   type?: string
   dueDate?: Date
   closingDate?: Date
+  updated_at?: Date
 }
