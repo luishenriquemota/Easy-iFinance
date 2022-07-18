@@ -6,7 +6,7 @@ import listOneFriendService from "../services/friendList/listOneFriend.service";
 
 export const addFriendController = async (req: Request, res: Response) => {
   try {
-    const { user_id } = req.params;
+    const user_id = req.user.id;
     const { myId } = req.body;
 
     const friends = addFriendService(user_id, myId);
@@ -26,9 +26,9 @@ export const addFriendController = async (req: Request, res: Response) => {
 export const deleteFriendController = async (req: Request, res: Response) => {
   try {
     const { friend_id } = req.params;
-    const { myId } = req.body;
+    const user_id = req.user.id;
 
-    const deleted = await deleteFriendService(friend_id, myId);
+    const deleted = await deleteFriendService(friend_id, user_id);
     return res.status(204);
   } catch (error) {
     if (error instanceof Error) {
@@ -42,7 +42,7 @@ export const deleteFriendController = async (req: Request, res: Response) => {
 
 export const listAllFriendsController = async (req: Request, res: Response) => {
   try {
-    const { user_id } = req.params;
+    const user_id = req.user.id;
 
     const friends = await listAllFriendsService(user_id);
     return res.status(200).send(friends);
@@ -59,9 +59,9 @@ export const listAllFriendsController = async (req: Request, res: Response) => {
 export const listOneFriendController = async (req: Request, res: Response) => {
   try {
     const { friend_id } = req.params;
-    const myId = req.body;
+    const user_id = req.user.id;
 
-    const friend = await listOneFriendService(friend_id, myId);
+    const friend = await listOneFriendService(friend_id, user_id);
     return res.status(200).send(friend);
   } catch (error) {
     if (error instanceof Error) {

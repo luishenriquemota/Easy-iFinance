@@ -1,36 +1,21 @@
 import { AppDataSource } from "../../data-source";
-//import da Entity User
-//import da Entity Friendlist
+import { Friendlist } from "../../entities/friendlist.entity";
+import { AppError } from "../../errors/appError";
 
 const deleteFriendService = async (friend_id: string, user_id: string) => {
-  //   const userRepository = AppDataSource.getRepository(User);
-  //   const friendlistRepository = AppDataSource.getRepository(Friendlist);
-  //   const user = await userRepository.find();
-  //   const friendlist = await friendlistRepository.find()
-  //   const userById = await user.find({
-  //       where: {
-  //         id: user_id,
-  //       },
-  //     })
-  //   const friendById = await user.find({
-  //       where: {
-  //           id: friend_id,
-  //       },
-  //     })
-  // const friendship = await friendlist.find({
-  //         where: [{
-  //             friend_1: userById.id,
-  //             friend_2: friendById.id,
-  //         },{
-  //             friend_1: friendById.id,
-  //             friend_2: userById.id,
-  //         }]
-  //       })
-  //     if(!friendship) {
-  //         throw new Error("Friendship not found")
-  //     }
-  //     await friendlistRepository.delete(friendship!.id)
-  //     return true
+  const friendlistRepository = AppDataSource.getRepository(Friendlist);
+  const friendlist = await friendlistRepository.find();
+
+  const friendship = friendlist.find(
+    (line) =>
+      (line.user1.id === user_id && line.user2.id === friend_id) ||
+      (line.user1.id === friend_id && line.user2.id === user_id)
+  );
+  if (!friendship) {
+    throw new AppError(409, "Users are not friends");
+  }
+  await friendlistRepository.delete(friendship!.id);
+  return true;
 };
 
 export default deleteFriendService;

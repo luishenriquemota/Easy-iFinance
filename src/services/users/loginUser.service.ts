@@ -12,7 +12,7 @@ const loginUserService =async ({email,password} : IUserLogin) => {
     const users = await userRepository.find();
 
     const account = users.find((user) => user.email === email);
-
+    
     if (!account) {
         throw new AppError(404, "Account not found")
       }
@@ -24,8 +24,10 @@ const loginUserService =async ({email,password} : IUserLogin) => {
     const token = jwt.sign({ id: account.id }, String(process.env.SECRET_KEY), {
         expiresIn: "1d",
       });
+
     
-      return token
+    
+    return token
 }
 
 

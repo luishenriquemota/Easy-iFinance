@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express' 
-import { AppError } from '../errors/appError';
+import { AppError } from '../errors/appError'; 
 
 export const errorMiddleware = (err: Error, req: Request, res: Response, _: NextFunction) => {
  
@@ -9,7 +9,10 @@ export const errorMiddleware = (err: Error, req: Request, res: Response, _: Next
   });
   }
 
+  
   return res.status(500).json({
-  message: "Internal server error"
+  status: "error",
+  code: 500,
+  message: "Internal server error",
   });
 }
