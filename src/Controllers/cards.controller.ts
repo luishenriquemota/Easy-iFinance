@@ -21,11 +21,12 @@ export const createCardController = async (req: Request, res: Response) => {
 
 
 export const listCardController = async (req: Request, res: Response) => {
-  const {id} = req.user
-  const card = await listCardService(id)
+  const user_id = req.user.id
+  const card = await listCardService(user_id)
 
   return res.status(200).json(card)
 }
+
 
 export const listOneCardController = async (req: Request, res: Response) => {
   const {card_id} = req.params
@@ -33,8 +34,9 @@ export const listOneCardController = async (req: Request, res: Response) => {
  
   const card = await listOneCardService(owner_id, Number(card_id))
 
-  return res.status(200).json({card})
+  return res.status(200).json(card)
 }
+
 
 
 export const updateCardController = async (req: Request, res: Response) => {
@@ -48,10 +50,10 @@ export const updateCardController = async (req: Request, res: Response) => {
 
 
 export const deleteCardController = async (req: Request, res: Response) => {
-  const {id} = req.user
+  const owner_id = req.user.id
   const {card_id} = req.params
 
-  // await deleteCardService(id, Number(card_id))
+  await deleteCardService(owner_id, Number(card_id))
 
   return res.status(204).send()
 }

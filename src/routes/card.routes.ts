@@ -1,9 +1,9 @@
 import {Router} from "express"
 import {createCardController, deleteCardController, listCardController, listOneCardController, updateCardController} from "../Controllers/cards.controller"
 import authToken from "../middlewares/authtoken.middleware"
-import verifyUserExistance from "../middlewares/verifyUserExistance"
-import verifyCardExistance from "../middlewares/verifyCardExistance.middlewares"
-import verifyCardRelation from "../middlewares/verifyCardAuthorization.middlewares"
+// import verifyUserExistance from "../middlewares/verifyUserExistance"
+// import verifyCardExistance from "../middlewares/verifyCardExistance.middlewares"
+// import verifyCardRelation from "../middlewares/verifyCardAuthorization.middlewares"
 
 
 const routes = Router()

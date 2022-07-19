@@ -29,8 +29,8 @@ export class Card {
   @UpdateDateColumn()
   updated_at: Date  
 
-  @ManyToOne(type => User, users=>users.cards, {eager: true})
-  Owner?:User
+  @ManyToOne(type => User, users=>users.cards, {eager:true})
+  Owner:User
 
   @ManyToMany(()=>User)
   @JoinTable()
