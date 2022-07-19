@@ -15,10 +15,17 @@ const listCardService = async (id: string) => {
 
   const cardRepository = AppDataSource.getRepository(Card)
 
-
-  const card = cardRepository.find()
+  const card = cardRepository.find({
+    where: {
+      Owner: {
+        id : id
+      }
+    }
+  })
 
   return card
 }
 
 export default listCardService
+
+// select:["name","id","limit"]

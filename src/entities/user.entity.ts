@@ -5,8 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 import { Card } from "./card.entity";
+import { Friends } from "./friends.entity";
 import { Transactions } from "./transactions.entity";
 
 @Entity()
@@ -35,12 +38,15 @@ export class User {
   @Column({default:true})
   isActive: Boolean;
  
-  @OneToMany(type => Card, cards => cards.Owner, {eager:true})
+  @OneToMany(type => Card, cards => cards.Owner)
   cards?:Card[]
 
   @OneToMany(type => Transactions, transactions => transactions.user, { eager:true } )
   transactions?: Transactions[]
 
+  @ManyToMany( type => Friends, {eager: true})
+  @JoinTable()
+  friendList: Friends[]
 }
 
 
