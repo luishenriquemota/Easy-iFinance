@@ -10,6 +10,8 @@ const verifyUserExistance = async (
   next: NextFunction
 ) => {
     const users_id = req.user.id
+
+    
     const userRepository = AppDataSource.getRepository(User)
 
     const foundUser = await userRepository.findOneBy({

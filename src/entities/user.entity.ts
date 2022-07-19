@@ -35,7 +35,7 @@ export class User {
   @Column({default:true})
   isActive: Boolean;
  
-  @OneToMany(type => Card, cards => cards.Owner, {eager:true})
+  @OneToMany(type => Card, cards => cards.Owner)
   cards?:Card[]
 
   @OneToMany(type => Transactions, transactions => transactions.user, { eager:true } )
