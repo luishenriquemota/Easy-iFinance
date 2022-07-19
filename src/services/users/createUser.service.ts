@@ -1,15 +1,17 @@
 import { IUserCreate, IUserReturn } from "../../interfaces/users";
 import { AppDataSource } from "../../data-source";
  import { User } from "../../entities/user.entity";
-import bcrypt from "bcryptjs";
+import bcrypt, { hash } from "bcryptjs";
 import { AppError } from "../../errors/appError";
+import { sendEmail } from "../../utils/sendEmail.util";
+import { IEmailRequest } from "../../interfaces/emails";
 
 const createUserService = async ({
   name,
   email,
   password,
   birth_date,
-}: IUserCreate) => {
+}: IUserCreate, protocol: string, host: string | undefined) => {
   const userRepository = AppDataSource.getRepository(User);
 
   const users = await userRepository.find();
@@ -20,11 +22,25 @@ const createUserService = async ({
     throw new AppError(409, "Email already exists");
   }
 
+  const activationToken = (Math.random() + 1).toString(36).substring(2);
+
   const user = new User();
   user.name = name;
   user.email = email;
   user.password! = bcrypt.hashSync(password, 10);
   user.birth_date = birth_date;
+  user.authToken = activationToken;
+
+  const emailData: IEmailRequest = {
+    subject: "Ativação de usuário",
+    text: `<h1>Por favor, ative o seu usuário</h1>
+    <h3>Seja bem-vindo ${user.name}, ative sua conta clicando neste <a href="${protocol}://${host}/users/activate/${activationToken}">Link<a> para utilizar o nosso sistema</h3>
+    `,
+    to: email
+  }
+
+  await sendEmail(emailData)
+
 
   userRepository.create(user);
   await userRepository.save(user);
