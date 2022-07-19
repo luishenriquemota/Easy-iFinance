@@ -13,8 +13,8 @@ export const cardRoutes = () => {
   routes.post("", authToken, createCardController)
   routes.get("", authToken, listCardController)
   routes.get("/:card_id", listOneCardController)
-  routes.patch("/:card_id", authToken, verifyUserExistance, verifyCardExistance, verifyCardRelation, updateCardController)
-  routes.delete("/:card_id", authToken, verifyUserExistance, verifyCardExistance, verifyCardRelation, deleteCardController)
+  routes.patch("/:card_id", authToken, updateCardController)
+  routes.delete("/:card_id", authToken, deleteCardController)
 
   return routes
 }

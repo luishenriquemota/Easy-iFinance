@@ -20,7 +20,7 @@ export const loginUserController = async (req: Request, res: Response) => {
 
     const token = await loginUserService({ email, password });
 
-    return res.status(200).json({token});
+    return res.status(202).json({token});
 
 };
 
@@ -29,7 +29,7 @@ export const profileUserController = async (req: Request, res: Response) => {
 
     const user = await profileUserService(id);
 
-    return res.status(200).json(user);
+    return res.status(202).json(user);
 
 };
 
@@ -39,7 +39,7 @@ export const updateUserController = async (req: Request, res: Response) => {
 
     const user = await updateUserService(id, changes);
 
-    return res.status(200).json(user);
+    return res.status(202).json(user);
 
 
 };

@@ -1,7 +1,7 @@
 export interface IUserCreate {
   name: string;
   email: string;
-  password: string;
+  password?: string;
   birth_date: Date;
 }
 
