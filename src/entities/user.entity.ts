@@ -36,7 +36,7 @@ export class User {
   isActive: Boolean;
 
   @Column({nullable: true})
-  tokenAtivacao: string;
+  authToken: string;
  
   @OneToMany(type => Card, cards => cards.Owner, {eager:true})
   cards?:Card[]
