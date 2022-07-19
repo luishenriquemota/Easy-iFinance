@@ -34,7 +34,7 @@ const createUserService = async ({
   const emailData: IEmailRequest = {
     subject: "Ativação de usuário",
     text: `<h1>Por favor, ative o seu usuário</h1>
-    <h3>Seja bem-vindo ${user.name}, ative sua conta clicanto no link:${protocol}://${host}/users/activate/${activationToken} para utilizar o nosso sistema</h3>
+    <h3>Seja bem-vindo ${user.name}, ative sua conta clicanto no link:<a>${protocol}://${host}/users/activate/${activationToken}</a> para utilizar o nosso sistema</h3>
     `,
     to: email
   }
