@@ -4,8 +4,11 @@ import { Transactions } from "../../entities/transactions.entity";
 import { AppError } from "../../errors/appError";
 
 const listCardTransactionsService = async (foundCard:Card)=>{ 
+    const transactionsRepository = AppDataSource.getRepository(Transactions)
 
-    if(foundCard.transactions.length === 0){
+    const cardTransaction = transactionsRepository.find()
+    console.log(cardTransaction)
+    if(!foundCard.transactions){
       throw new AppError( 400 , "Card don't have transactions")
     }
     
