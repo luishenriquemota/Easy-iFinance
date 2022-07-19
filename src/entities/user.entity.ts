@@ -38,7 +38,7 @@ export class User {
   @Column({nullable: true})
   authToken: string;
  
-  @OneToMany(type => Card, cards => cards.Owner, {eager:true})
+  @OneToMany(type => Card, cards => cards.Owner)
   cards?:Card[]
 
   @OneToMany(type => Transactions, transactions => transactions.user, { eager:true } )
