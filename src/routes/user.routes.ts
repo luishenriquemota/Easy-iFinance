@@ -16,7 +16,7 @@ export const userRoutes = () => {
   routes.post("", createUserController);
   routes.post("/login", loginUserController);
   routes.get("/profile", authToken, profileUserController)
-  routes.get("/activate/:tokenAtivacao", activateUserController)
+  routes.get("/activate/:authToken", activateUserController)
   routes.patch("", authToken, updateUserController)
   routes.delete("", authToken, deleteUserController)
 

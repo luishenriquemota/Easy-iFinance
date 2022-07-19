@@ -29,7 +29,7 @@ const createUserService = async ({
   user.email = email;
   user.password! = bcrypt.hashSync(password, 10);
   user.birth_date = birth_date;
-  user.tokenAtivacao = activationToken;
+  user.authToken = activationToken;
 
   const emailData: IEmailRequest = {
     subject: "Ativação de usuário",

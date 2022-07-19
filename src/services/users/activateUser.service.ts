@@ -1,15 +1,15 @@
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/user.entity";
 
-const activateUserService = async (tokenAtivacao: string): Promise<void> => {
+const activateUserService = async (authToken: string): Promise<void> => {
 
     const userRepository = AppDataSource.getRepository(User)
 
-    const verify = tokenAtivacao
+    const verify = authToken
 
     const user = await userRepository.findOne({
         where: {
-            tokenAtivacao: verify
+            authToken: verify
         }
     })
 
@@ -21,7 +21,7 @@ const activateUserService = async (tokenAtivacao: string): Promise<void> => {
         id: user.id
     },{
         isActive: true,
-        tokenAtivacao: ""
+        authToken: ""
       }
     )
 }

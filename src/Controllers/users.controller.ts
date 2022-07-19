@@ -55,11 +55,9 @@ export const deleteUserController = async (req: Request, res: Response) => {
     return res.status(204).send();
 };
 export const activateUserController = async (req: Request, res: Response) => {
-    const tokenAtivacao = req.params.tokenAtivacao
-    await activateUserService(tokenAtivacao)
+    const authToken = req.params.authToken
+    await activateUserService(authToken)
     return res.json({
         message: "User activated with success"
     })
-
-    return res.status(204).send();
 };
