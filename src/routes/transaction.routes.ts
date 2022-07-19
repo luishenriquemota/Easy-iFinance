@@ -9,9 +9,9 @@ const routes = Router()
 
 export const transactionRouter = () => {
 
-  routes.post("",authToken,verifyUserExistance, verifyCardExistance, verifyUserCardRelation, createTransactionsController)
+  routes.post("",authToken, verifyUserExistance, verifyCardExistance, createTransactionsController)
   routes.get("/userTransactions", authToken, listTransactionsController)
-  routes.get("/:card_id",authToken,verifyUserExistance, verifyCardExistance, verifyUserCardRelation, listCardTransactionsController)
+  routes.get("/:card_id",authToken,verifyUserExistance, verifyCardExistance, listCardTransactionsController)
   routes.patch("/:transaction_id",authToken, verifyUserExistance, updateTransactionsController)
   routes.delete("/:transaction_id",authToken, verifyUserExistance, deleteTransactionsController)
 

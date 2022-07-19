@@ -11,6 +11,7 @@ const verifyCardExistance = async (
 ) => {
     
     const card_id = req.params.card_id || req.body.card_id
+    
     const cardRepository = AppDataSource.getRepository(Card)
 
     const foundCard = await cardRepository.findOneBy({
@@ -21,7 +22,8 @@ const verifyCardExistance = async (
         throw new AppError( 404 , "Card not exists")
     }
     req.user.foundCard = foundCard
-
+    
+    console.log(JSON.stringify(foundCard));
     next()
 
 };
