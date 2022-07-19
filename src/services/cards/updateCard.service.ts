@@ -2,6 +2,7 @@ import {AppDataSource} from "../../data-source"
 import {ICardUpdate} from "../../interfaces/cards"
 import {Card} from "../../entities/card.entity"
 import { AppError } from "../../errors/appError";
+import { User } from "../../entities/user.entity";
 
 
 

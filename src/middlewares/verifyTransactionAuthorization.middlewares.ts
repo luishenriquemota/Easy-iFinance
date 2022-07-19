@@ -10,7 +10,7 @@ const verifyUserCardRelation = async (
   next: NextFunction
 ) => {
     const {foundCard, foundUser} =req.user
-    console.log(foundCard, foundUser)
+  
     if(foundCard && foundUser){
      const userCard = foundUser.cards?.filter(card => card.id === req.user.foundCard!.id)
         if(!userCard) {

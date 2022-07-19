@@ -68,7 +68,7 @@ describe("Create a transaction",  () =>{
     test("Should fail to create a incomplete transaction", async ()=>{       
         const login =  await request(app).post("/users/login").send(sucessLogin);
         const {token} = login.body;
-        console.log(token)       
+              
         const response = await request(app).post(`/transactions`).set("Authorization", `Bearer ${token}`).send(failTransaction);
         expect(response.status).toBe(400)
         expect(response.body).toHaveProperty("message")             
