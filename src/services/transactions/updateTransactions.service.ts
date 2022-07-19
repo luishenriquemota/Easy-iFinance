@@ -18,15 +18,14 @@ const updateTransactionService = async (foundUser:User,transactions_id:string, u
     
     if(!findTransaction || !isUserTransaction){
         throw new AppError( 404, "Transaction not found")
-    }
+    }    
+
+    updatedData.updated_at = new Date()
+
+    await transactionsRepository.update(transactions_id, updatedData)
+
+    const updatedTransaction = {...findTransaction, ...updatedData}
     
-    const updatedTransaction = {...findTransaction,...updatedData}
-
-    updatedTransaction.updated_at = new Date()
-
-    await transactionsRepository.update(transactions_id, updatedTransaction)
-
-
     return updatedTransaction
     
 }

@@ -28,8 +28,8 @@ const listCardService = async (user_id: string) => {
       name: card.name,    
       limit: card.limit,
       type: card.type,
-      dueDate: card.dueDate,
-      closingDate: card.closingDate,
+      dueDate: card.dueDate!,
+      closingDate: card.closingDate!,
       updated_at: card.updated_at,
       ownerId: card.Owner.id,
       allowedUsers: card.allowedUsers

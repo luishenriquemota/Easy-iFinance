@@ -23,7 +23,7 @@ const verifyCardExistance = async (
     }
     req.user.foundCard = foundCard
     
-    console.log(JSON.stringify(foundCard));
+    
     next()
 
 };

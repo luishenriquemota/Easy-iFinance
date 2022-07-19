@@ -27,7 +27,7 @@ const createUserService = async ({
   const user = new User();
   user.name = name;
   user.email = email;
-  user.password! = bcrypt.hashSync(password, 10);
+  user.password! = bcrypt.hashSync(password!, 10);
   user.birth_date = birth_date;
   user.authToken = activationToken;
 
