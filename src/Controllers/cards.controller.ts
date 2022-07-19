@@ -11,7 +11,7 @@ export const createCardController = async (req: Request, res: Response) => {
   
   const card = await createCardService(id, {name, limit, type, dueDate, closingDate})
 
-  if ( !name || !limit || !type || !dueDate || !closingDate) {
+  if ( !name || !limit || !type) {
     return res.status(400).json({
       message: "Fields name, limit, type, dueDate and closingDate are required."
   })}
@@ -30,8 +30,9 @@ export const listCardController = async (req: Request, res: Response) => {
 
 export const listOneCardController = async (req: Request, res: Response) => {
   const {card_id} = req.params
-  
-  const card = await listOneCardService(Number(card_id))
+  const owner_id = req.user.id
+ 
+  const card = await listOneCardService(owner_id, Number(card_id))
 
   return res.status(200).json(card)
 }

@@ -18,10 +18,10 @@ export class Card {
   type: string
 
   @Column()
-  dueDate: Date
+  dueDate?: Date
 
   @Column()
-  closingDate: Date
+  closingDate?: Date
 
   @CreateDateColumn()
   created_at: Date
@@ -36,7 +36,7 @@ export class Card {
   @JoinTable()
   allowedUsers:User[]
 
-  @OneToMany(type => Transactions, transactions => transactions.card, { eager:true } )
+  @OneToMany(type => Transactions, transactions => transactions.card)
   transactions: Transactions[]
 
 }

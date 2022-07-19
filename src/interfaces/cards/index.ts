@@ -4,8 +4,8 @@ export interface ICardCreate {
   name: string
   limit: number
   type: string
-  dueDate: Date
-  closingDate: Date
+  dueDate?: Date
+  closingDate?: Date
 }
 
 export interface ICardList {

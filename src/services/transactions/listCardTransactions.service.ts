@@ -3,9 +3,10 @@ import { Card } from "../../entities/card.entity";
 import { Transactions } from "../../entities/transactions.entity";
 import { AppError } from "../../errors/appError";
 
-const listCardTransactionsService = async (foundCard:Card)=>{ 
+const listCardTransactionsService = async (foundCard:Card)=>{
+    console.log(foundCard)
 
-    if(foundCard.transactions.length === 0){
+    if(!foundCard.transactions){
       throw new AppError( 400 , "Card don't have transactions")
     }
     

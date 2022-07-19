@@ -38,8 +38,6 @@ const listCardService = async (user_id: string) => {
   })
   
   return returnCards
-
-  
 }
 
 export default listCardService

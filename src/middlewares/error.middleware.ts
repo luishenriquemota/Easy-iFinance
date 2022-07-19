@@ -9,7 +9,7 @@ export const errorMiddleware = (err: Error, req: Request, res: Response, _: Next
   });
   }
 
-  
+  console.log(err)
   return res.status(500).json({
   status: "error",
   code: 500,
