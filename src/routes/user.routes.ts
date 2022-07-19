@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  activateUserController,
   createUserController,
   deleteUserController,
   loginUserController,
@@ -15,6 +16,7 @@ export const userRoutes = () => {
   routes.post("", createUserController);
   routes.post("/login", loginUserController);
   routes.get("/profile", authToken, profileUserController)
+  routes.get("/activate/:tokenAtivacao", activateUserController)
   routes.patch("", authToken, updateUserController)
   routes.delete("", authToken, deleteUserController)
 

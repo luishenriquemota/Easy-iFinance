@@ -32,8 +32,11 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @Column({default:true})
+  @Column({default:false})
   isActive: Boolean;
+
+  @Column({nullable: true})
+  tokenAtivacao: string;
  
   @OneToMany(type => Card, cards => cards.Owner, {eager:true})
   cards?:Card[]

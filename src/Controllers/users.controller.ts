@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import activateUserService from "../services/users/activateUser.service";
 import createUserService from "../services/users/createUser.service";
 import deleteUserService from "../services/users/deleteUser.service";
 import loginUserService from "../services/users/loginUser.service";
@@ -7,8 +8,10 @@ import updateUserService from "../services/users/updateUser.service";
 
 export const createUserController = async (req: Request, res: Response) => {
     const { name, email, password, birth_date } = req.body;
+    const protocol = req.protocol
+    const host = req.get('host')
 
-    const newUser = await createUserService({ name, email, password, birth_date });
+    const newUser = await createUserService({ name, email, password, birth_date }, protocol, host);
 
     return res.status(201).json(newUser);
 
@@ -48,6 +51,15 @@ export const deleteUserController = async (req: Request, res: Response) => {
     const id = req.user.id;
 
     await deleteUserService(id);
+
+    return res.status(204).send();
+};
+export const activateUserController = async (req: Request, res: Response) => {
+    const tokenAtivacao = req.params.tokenAtivacao
+    await activateUserService(tokenAtivacao)
+    return res.json({
+        message: "User activated with success"
+    })
 
     return res.status(204).send();
 };
