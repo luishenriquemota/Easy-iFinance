@@ -9,9 +9,9 @@ export const createTransactionsController = async (req:Request, res:Response) =>
     const userData = req.body
     const {foundUser, foundCard } = req.user
 
-    const newUser = await createTransactionsService(foundUser!,foundCard!, userData)
+    const newTransaction = await createTransactionsService(foundUser!,foundCard!, userData)
 
-    return res.status(201).json(newUser)
+    return res.status(201).json(newTransaction)
 }
 
 export const listTransactionsController = async  (req:Request, res:Response)=>{
