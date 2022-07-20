@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source"
 import { Card } from "../../entities/card.entity"
+import { Friendlist } from "../../entities/friendlist.entity"
 import { User } from "../../entities/user.entity"
 import { AppError } from "../../errors/appError"
 
@@ -14,21 +15,34 @@ const addToAllowedService = async (foundUser:User, foundCard:Card, friend_id:str
         throw new AppError(404, "User not found")
     }
 
-    /*foundUser.friendList.find(user => user.id.toString() === friendToAllow.id)
-    
-    if(!foundUser){
-        throw new AppError(409, "You can't add a user that isn't your friend.")
-    }*/
-    
-   
+    const friendlistRepository = AppDataSource.getRepository(Friendlist);
 
-    const updatedData = {
-        allowedUsers : foundCard.allowedUsers
+    const user = await userRepository.findOne({where:{id: foundUser.id}, relations:['friendList', 'friendList.user', 'friendList.friend']})
+
+    if(!user) return undefined
+
+    if(user.friendList.length === 0){
+     throw new AppError(404,"your friends list is empty")
     }
 
-    updatedData.allowedUsers.push(friendToAllow)
+    const friendsLists = user.friendList.map((entity) => {
+        return entity.friend
+    })
 
-    cardRepository.update(foundCard.id,updatedData)
+    const foundFriend = friendsLists.find(user => user.id === friendToAllow.id)
+    
+    console.log(friendsLists)
+    if(!foundFriend){
+        throw new AppError(409, "You can't add a user that isn't your friend.")
+    }
+    
+    
+
+    foundCard.allowedUsers.push(foundFriend)
+    
+       
+
+    cardRepository.save(foundCard)
     
     const returnAllowed = {
         id: foundCard.id,

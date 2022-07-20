@@ -14,7 +14,7 @@ const listOneCardService = async (owner_id:string, card_id:number) => {
 
 
   if(card.Owner?.id !== owner_id){
-    throw new AppError(409, "you do not have permission")
+    throw new AppError(403, "you do not have permission")
   }
 
   const returnCard = card.type === "credit"? {

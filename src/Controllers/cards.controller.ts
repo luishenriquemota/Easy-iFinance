@@ -5,6 +5,7 @@ import createCardService from "../services/cards/createCard.service";
 import deleteCardService from "../services/cards/deleteCard.service";
 import listCardService from "../services/cards/listCards.service";
 import listOneCardService from "../services/cards/listOneCard.service";
+import rmvFromAllowedService from "../services/cards/rmvFromAllowed.card.service";
 import updateCardService from "../services/cards/updateCard.service";
 
 export const createCardController = async (req: Request, res: Response) => {
@@ -64,4 +65,13 @@ export const addToallowController = async (req:Request, res:Response)=>{
   const allowedFriendAdded = await addToAllowedService(foundUser!,foundCard!,friend_id)
 
   return res.status(201).json(allowedFriendAdded)
+}
+
+export const rmvFromAllowedController = async (req:Request, res:Response)=>{
+  const {foundCard, foundUser} = req.user
+  const {friend_id} = req.params
+  
+  await rmvFromAllowedService(foundUser!,foundCard!,friend_id)
+
+  return res.status(204).send()
 }

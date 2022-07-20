@@ -7,7 +7,7 @@ import {User} from "../../entities/user.entity"
 
 const createCardService = async (owner_id: string, {name, limit, type, dueDate, closingDate}: ICardCreate)=>  {
    if ( !name || !type || !limit) {
-    throw new AppError(409,"Fields name, type and limit  are required.")   
+    throw new AppError(400,"Fields name, type and limit  are required.")   
   }
   
   const userRepository = AppDataSource.getRepository(User)
@@ -51,7 +51,7 @@ const createCardService = async (owner_id: string, {name, limit, type, dueDate, 
   }
 
   if(!closingDate || !dueDate || !limit) {
-    throw new AppError(409, "Due Date, Closing date are required.");
+    throw new AppError(400, "Due Date, Closing date are required.");
   }
   const newCard = new Card
   newCard.name = name  

@@ -33,23 +33,23 @@ const successTransaction ={
 
 describe("delete transaction",  () =>{
     let connection:DataSource
-    let token = ""
+   
     beforeAll( async ()=>{
         await AppDataSource.initialize()
         .then((res)=> (connection =res))
         .catch((err)=>console.error("Failure on Database Initialization", err))
         const newUser = await request(app).post("/users").send(sucessUser);
         const userRepository = AppDataSource.getRepository(User)
-        if(newUser.body.id){
-            const foundUser = await userRepository.findOneBy({
-                id:newUser.body.id
-            })
-            if(foundUser){
-                const activation = await activateUserService(foundUser.authToken!)
-            }
-        } 
+        
+        const foundUser = await userRepository.findOneBy({
+            id:newUser.body.id
+        })
+        if(foundUser){
+            const activation = await activateUserService(foundUser.authToken!)
+        }
+         
         const login =  await request(app).post("/users/login").send(sucessLogin);
-        token = login.body.token
+        const {token} = login.body
         await request(app).post("/cards").set("Authorization", `Bearer ${token}`).send(sucessCard);
         await request(app).post(`/transactions`).set("Authorization", `Bearer ${token}`).send(successTransaction)
     })
@@ -69,7 +69,9 @@ describe("delete transaction",  () =>{
         }))                       
     })
 
-    test("Should delete a user transaction", async ()=>{        
+    test("Should delete a user transaction", async ()=>{  
+        const login =  await request(app).post("/users/login").send(sucessLogin);
+        const {token} = login.body      
     
         const response = await request(app).delete(`/transactions/1`).set("Authorization", `Bearer ${token}`);
        

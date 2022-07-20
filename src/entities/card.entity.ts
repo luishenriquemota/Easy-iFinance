@@ -32,7 +32,7 @@ export class Card {
   @ManyToOne(type => User, users=>users.cards, {eager:true})
   Owner:User
 
-  @ManyToMany(()=>User)
+  @ManyToMany(()=>User, {eager:true})
   @JoinTable()
   allowedUsers:User[]
 

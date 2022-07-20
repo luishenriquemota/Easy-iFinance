@@ -34,7 +34,7 @@ https://easy-ifinance.herokuapp.com
 
 Segue abaixo alguns diagramas que podem lhe auxiliar a entender o fluxo de dados da nossa aplicação:
 
-![DER](https://i.postimg.cc/zGGT2Y1v/diagrams.png)
+![DER](https://i.postimg.cc/wjCzMrC0/diagrams.png)
 
 ---
 ## 3. Início Rápido
@@ -185,7 +185,7 @@ Consideramos que a partir daqui, você já se cadastrou e se autenticou na aplic
 - [Friendlist](#4-friendlist)
     - [POST - /friends/:user_id](#41-adição-de-amigo)
     - [DELETE - /friends/:friend_id](#42-remoção-de-amigo)
-    - [GET - /friends/:user_id](#43-listagem-de-todos-amigos)
+    - [GET - /friends/:user_id](#43-listagem-de-todos-os-amigos)
     - [GET - /friends/:friend_id](#44-listagem-de-amigo-especifico)
 
 ---
@@ -229,7 +229,7 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 409 Not available   | User not found |
+| 409 Conflict   | User not found |
 | 401 Unauthorized   | Invalid token |
 
 ---
@@ -272,7 +272,7 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 404 Not available   | User dont exists |
+| 404 Not found  | User dont exists |
 | 401 Unauthorized   | Invalid token |
 
 ---
@@ -295,7 +295,7 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 409 Not available   | User not found |
+| 409 Conflict   | User not found |
 | 401 Unauthorized   | Invalid token |
 
 ---
@@ -345,8 +345,8 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 404 Not available   | User not found |
-| 409 Not available   | Card already exists |
+| 404 Not found  | User not found |
+| 409 Conflict   | Card already exists |
 | 401 Unauthorized   | Invalid token |
 
 ---
@@ -382,7 +382,7 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 404 Not available   | Card not found |
+| 404 Not found  | Card not found |
 | 401 Unauthorized   | Invalid token |
 
 ---
@@ -483,9 +483,9 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 404 Not available   | Card not found |
+| 404 Not found   | Card not found |
 | 401 Unauthorized   | Invalid token |
-| 404 Not available   | User not found |
+| 404 Not found   | User not found |
 
 ---
 ## 3. Transactions
@@ -573,7 +573,7 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 404 Not available   | User not found |
+| 404 Not found   | User not found |
 | 401 Unauthorized   | Invalid token |
 | 400 Invalid | User don't have transactions |
 
@@ -610,7 +610,7 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 404 Not available   | User not found |
+| 404 Not found  | User not found |
 | 401 Unauthorized   | Invalid token |
 | 400 Invalid | Card don't have transactions |
 
@@ -654,10 +654,11 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 404 Not available   | Transaction not found |
+| 404 Not found  | Transaction not found |
 | 401 Unauthorized   | Invalid token |
 | 400 Invalid | Card don't have transactions |
-| 404 Not available   | User not exists |
+| 404 Not found  | User not exists |
+
 ---
 ### 3.5. Deleção de transactions
 ### `/transactions/:transaction_id`
@@ -678,12 +679,130 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 404 Not available   | Transaction not found |
+| 404 Not found   | Transaction not found |
 | 401 Unauthorized   | Invalid token |
 | 400 Invalid | Card don't have transactions |
-| 404 Not available   | User not exists |
+| 404 Not found   | User not exists |
+
 ---
 ## 4. Friendlist
 Estas são as rotas relacionadas ao CRUD de friendlist.
 
 [ Voltar para Endpoints ](#5-endpoints)
+
+### 4.1. Adição de amigo
+### `/friends/:friend_id`
+
+Adiciona um amigo especifico.
+
+### Exemplo de Request:
+```
+POST /friends/:friend_id
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Exemplo de Response:
+```
+201 Created
+```
+```json
+{
+	"message": "John added to your friendlist."
+}
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not found   | User not found. |
+| 401 Unauthorized   | Invalid token |
+| 409 Conflict | Card don't have transactions |
+| 404 Not found  | you and this user are already friends. |
+
+---
+### 4.2. Remoção de amigo
+### `/friends/:friend_id`
+
+Remove um amigo especifico da sua lista de amigos.
+
+### Exemplo de Request:
+```
+DELETE /friends/:friend_id
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+204 Success, no content
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not found   | User not found. |
+| 401 Unauthorized   | Invalid token |
+
+---
+### 4.3. Listagem de todos os amigos
+### `/friends/`
+
+Lista todos os amigos do usuário que fez a requisição.
+### Exemplo de Request:
+```
+GET /friends
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+200 Success
+```
+```json
+{
+	[{
+	"friendId": "anfh58jadnsasv762sgab21vbm0x"
+	}, {
+	"friendId": "dafh58jatyhggsv761sgab21vbmcaca"
+	}]
+}
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not found   | your friends list is empty |
+| 401 Unauthorized   | Invalid token |
+
+---
+### 4.4. Listagem de amigo especifico
+### `/friends/:friend_id`
+
+Lista um amigo especifico do usuário que fez a requisição.
+
+### Exemplo de Request:
+```
+GET /friends/:friend_id
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+200 Success
+```
+```json
+{
+	{
+	"friendId": "anfh58jadnsasv762sgab21vbm0x"
+	}
+}
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not found   | Friend not found |
+| 401 Unauthorized   | Invalid token |
+
+---

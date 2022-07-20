@@ -46,7 +46,7 @@ describe("Get user profile",()=>{
         
         const response = await request(app).get("/users/profile").set("Authorization", `Bearer ${token}`)
 
-        expect(response.status).toBe(202)
+        expect(response.status).toBe(200)
         expect(response.body).toEqual(expect.objectContaining({
             id:response.body.id,
             name:response.body.name,
@@ -56,7 +56,8 @@ describe("Get user profile",()=>{
             updated_at: response.body.updated_at,
             friendList:response.body.friendList,
             transactions:response.body.transactions,            
-            isActive:response.body.isActive
+            isActive:response.body.isActive,
+            authToken:response.body.authToken
                        
         }))
         

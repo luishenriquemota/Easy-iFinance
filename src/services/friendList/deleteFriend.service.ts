@@ -16,7 +16,8 @@ const deleteFriendService = async (friend_id: string, user_id: string) => {
     user.friendList.map(async (list) => {
     const friendTable = await friendlistRepository.findOne({where:{id: list.id, friend:{id: friend_id}}, relations:['friend']})
 
-    if(!friendTable?.id) throw new AppError(400, "User dont exists")
+
+    if(!friendTable?.id) throw new AppError(404, "Not found")
     
     return friendTable.id
     })

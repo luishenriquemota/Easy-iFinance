@@ -17,8 +17,8 @@ const sucessCard = {
     name:"nubank", 
     limit:2000, 
     type:"credit", 
-    dueDate:"01/10/2022", 
-    closingDate:"20/12/2022"
+    dueDate:1, 
+    closingDate:20
 };
 const failCard = {
     limit:2000, 
@@ -98,7 +98,7 @@ describe("Create Card",  () =>{
 
         const response = await request(app).post("/cards").set("Authorization", `Bearer ${token}`).send(failCard);
         
-        expect(response.status).toBe(409)
+        expect(response.status).toBe(400)
         expect(response.body).toHaveProperty("message")
     })
     

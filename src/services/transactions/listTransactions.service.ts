@@ -7,16 +7,20 @@ import { IListTransaction } from "../../interfaces/Transactions";
 
 
 
-const listTransactionsService = async (foundUser:User) => {
-    
-    const cardRepository = AppDataSource.getRepository(Card)   
-    
-    const userTransactions = foundUser.transactions
 
-    if(!userTransactions){
-        throw new AppError( 400, "User don't have transactions")
-    }      
     
+const listTransactionsService = async (foundUser:User) => {
+
+    const cardRepository = AppDataSource.getRepository(Card)   
+    const transactionsRepository = AppDataSource.getRepository(Transactions)
+    
+
+    const userTransactions = await transactionsRepository.find({where:{user:{id:foundUser.id}}})
+   
+    if(!userTransactions){
+        throw new AppError( 404, "User don't have transactions")
+    }      
+        
     const returnTransactions = Promise.all(userTransactions.map( async (transaction)=>{
         const card = await cardRepository.findOneBy({transactions:{transactions_id:transaction.transactions_id}})
         if(!card){
@@ -35,12 +39,13 @@ const listTransactionsService = async (foundUser:User) => {
         }
         
         return treatedTransaction
-        
+            
     }))    
-   
-    
+       
+        
     return returnTransactions
-
+    
 }
+    
 
 export default listTransactionsService

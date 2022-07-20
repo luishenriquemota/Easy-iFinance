@@ -18,7 +18,7 @@ const createUserService = async ({
 
   const emailAlreadyExists = users.find((user) => user.email === email);
   if(!name|| !email|| !password|| !birth_date){
-    throw new AppError(409, "User need a name, email, passowrd and birth date to be created.");
+    throw new AppError(400, "User need a name, email, passowrd and birth date to be created.");
   }
   if (emailAlreadyExists) {
     throw new AppError(409, "User with this email already exist");
