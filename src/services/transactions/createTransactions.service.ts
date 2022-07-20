@@ -10,7 +10,7 @@ import { sendEmail } from "../../utils/sendEmail.util";
 const createTransactionsService = async (
   foundUser: User,
   foundCard: Card,
-  { description, category, value, type }: ITransaction,
+  { description, category, value, type }: ITransaction
 ) => {
   const transactionsRepository = AppDataSource.getRepository(Transactions);
 
@@ -25,19 +25,50 @@ const createTransactionsService = async (
   const emailData: IEmailRequest = {
     subject: "Relatorio da transação",
     text: `<h1>Transação criada.</h1>
-    <h2>${foundCard.name}</h2>
+    <body>
+    <h2>Cartão: ${foundCard.name}</h2>
     <ul>
-        <h3>${newTransaction.category}</h3>
+        <h3>Categoria: ${newTransaction.category}</h3>
             <li>
-                <p>${newTransaction.description}</p>
-                <p>${newTransaction.value}</p>
-                <p>${newTransaction.type}</p>
+                <p>Descrição: ${newTransaction.description}</p>
+                <p>Valor: ${newTransaction.value.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                })}</p>
+                <p>Tipo: ${newTransaction.type}</p>
             </li>
     </ul>
-    `,
-    to: foundUser.email
+    </body>
+    <style>
+    h2{
+      border-bottom: 1px solid black;
   }
-  await sendEmail(emailData)
+h1,h2{
+      text-align: center;
+}
+h3{
+  font-weight: lighter;
+}
+body{
+text-align: left;
+border: 1px solid black;
+border-radius: 15px;
+max-width: 400px;
+
+}
+li{
+list-style: none;
+}
+ul{
+  margin-left: 25%;
+}
+    
+    
+    </style>
+    `,
+    to: foundUser.email,
+  };
+  await sendEmail(emailData);
 
   await transactionsRepository.save(newTransaction);
 

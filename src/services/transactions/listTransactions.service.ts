@@ -5,6 +5,7 @@ import { AppError } from "../../errors/appError";
 
 
 
+
 const listTransactionsService = async (user_id:string) => {
     const transactionsRepository = AppDataSource.getRepository(Transactions)
     const userRepository = AppDataSource.getRepository(User)
@@ -23,6 +24,7 @@ const listTransactionsService = async (user_id:string) => {
     if(userTransactions?.length === 0){
         throw new AppError( 400, "User don't have transactions")
     }
+
 
     return userTransactions
 
