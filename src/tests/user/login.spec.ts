@@ -52,7 +52,7 @@ describe("Login a new User",()=>{
         
         const response = await request(app).post("/users/login").send(sucessLogin)
         
-        expect(response.status).toBe(202)
+        expect(response.status).toBe(200)
         expect(response.body).toHaveProperty("token")
 
     })
@@ -70,7 +70,7 @@ describe("Login a new User",()=>{
 
         const response = await request(app).post("/users/login").send(failLogin)
 
-        expect(response.status).toBe(404)
+        expect(response.status).toBe(403)
         expect(response.body).toEqual(expect.objectContaining({
             message:"Wrong email/password"            
         }))
@@ -89,7 +89,7 @@ describe("Login a new User",()=>{
 
         const response = await request(app).post("/users/login").send(failLogin2)
 
-        expect(response.status).toBe(404)
+        expect(response.status).toBe(403)
         expect(response.body).toEqual(expect.objectContaining({
             message:"Wrong email/password"            
         }))

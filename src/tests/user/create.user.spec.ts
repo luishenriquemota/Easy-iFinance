@@ -71,7 +71,7 @@ describe("Create new user",()=>{
     })
     test("Should fail to create a user without info", async ()=>{
         const response = await request(app).post("/users").send(failUser);
-        expect(response.status).toBe(409)
+        expect(response.status).toBe(400)
         expect(response.body).toEqual(expect.objectContaining({
             message:"User need a name, email, passowrd and birth date to be created."
         }))

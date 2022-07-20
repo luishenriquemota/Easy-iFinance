@@ -49,7 +49,7 @@ describe("Update user profile",()=>{
         
         const response = await request(app).patch("/users").set("Authorization", `Bearer ${token}`).send(updatedData)
 
-        expect(response.status).toBe(202)
+        expect(response.status).toBe(200)
         expect(response.body).toEqual(expect.objectContaining({
             id:response.body.id,
             name:response.body.name,

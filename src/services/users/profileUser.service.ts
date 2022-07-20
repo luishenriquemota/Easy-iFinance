@@ -8,7 +8,7 @@ const profileUserService = async (id: string) => {
   const user = await userRepository.findOneBy({id : id});
 
   if (!user) {
-    throw new AppError(409, "User not found");
+    throw new AppError(404, "User not found");
   }
 
   return {...user, password: undefined,transactions:user.transactions || []};

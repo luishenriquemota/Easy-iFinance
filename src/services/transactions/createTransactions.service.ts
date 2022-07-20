@@ -7,11 +7,10 @@ import { ITransaction } from "../../interfaces/Transactions";
 import { IEmailRequest } from "../../interfaces/emails";
 import { sendEmail } from "../../utils/sendEmail.util";
 
-const createTransactionsService = async (
-  foundUser: User,
-  foundCard: Card,
-  { description, category, value, type }: ITransaction,
-) => {
+const createTransactionsService = async (foundUser:User, foundCard:Card,{description,category,value, type}:ITransaction) => {
+  if(!description || !category ||!value|| !type ){
+      throw new AppError(400, "A transaction need a description, category, value and type")
+  }
   const transactionsRepository = AppDataSource.getRepository(Transactions);
 
   if(!description || !category ||!value|| !type ){
@@ -26,7 +25,11 @@ const createTransactionsService = async (
   newTransaction.card = foundCard;
   newTransaction.user = foundUser;  
 
-  
+// const createTransactionsService = async (foundUser:User, foundCard:Card,{description,category,value, type}:ITransaction) => {
+//     if(!description || !category ||!value|| !type ){
+//         throw new AppError(400, "A transaction need a description, category, value and type")
+//     }
+    // const transactionsRepository = AppDataSource.getRepository(Transactions)
 
   const emailData: IEmailRequest = {
     subject: "Relatorio da transação",

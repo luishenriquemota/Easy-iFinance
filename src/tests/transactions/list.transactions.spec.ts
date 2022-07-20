@@ -80,7 +80,7 @@ describe("list transactions",  () =>{
         
         const response = await request(app).get(`/transactions/userTransactions`).set("Authorization", `Bearer ${token}`);
         
-        expect(response.status).toBe(202)
+        expect(response.status).toBe(200)
         expect(response.body).toEqual(expect.arrayContaining([expect.objectContaining({
             transactions_id: newTransaction.body.transactions_id,
             description: newTransaction.body.description,
@@ -104,7 +104,7 @@ describe("list transactions",  () =>{
    
         const response = await request(app).get(`/transactions/${newCard2.body.id}`).set("Authorization", `Bearer ${token}`);
         
-        expect(response.status).toBe(202)
+        expect(response.status).toBe(200)
         expect(response.body).toEqual(expect.arrayContaining([expect.objectContaining(newTransaction2.body)]))          
     })
 

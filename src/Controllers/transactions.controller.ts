@@ -20,8 +20,9 @@ export const listTransactionsController = async  (req:Request, res:Response)=>{
     if(foundUser){
         const userTransactions = await listTransactionsService(foundUser)
 
-        return res.status(202).json(userTransactions)
-    }
+
+    return res.status(200).json(userTransactions)
+
     
 }
 export const listCardTransactionsController = async  (req:Request, res:Response)=>{
@@ -29,7 +30,7 @@ export const listCardTransactionsController = async  (req:Request, res:Response)
 
     const cardTransactions = await listCardTransactionsService(foundCard!)
 
-    return res.status(202).json(cardTransactions)
+    return res.status(200).json(cardTransactions)
     
 }
 
@@ -40,7 +41,7 @@ export const updateTransactionsController = async (req:Request, res:Response) =>
 
     const updatedTransaction = await updateTransactionService(foundUser!,transaction_id,updatedData)
 
-    return res.status(202).json(updatedTransaction)
+    return res.status(200).json(updatedTransaction)
 }
 
 export const deleteTransactionsController = async (req:Request, res:Response)=>{

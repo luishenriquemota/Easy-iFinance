@@ -67,7 +67,8 @@ describe("update transaction",  () =>{
         const {token} = login.body      
         const newTransaction = await request(app).post(`/transactions`).set("Authorization", `Bearer ${token}`).send(successTransaction)
         const response = await request(app).patch(`/transactions/${newTransaction.body.transactions_id}`).set("Authorization", `Bearer ${token}`).send(updateData);
-        expect(response.status).toBe(202) 
+        
+        expect(response.status).toBe(200) 
         expect(response.body).toEqual(expect.objectContaining({
             transactions_id:response.body.transactions_id,
             description:response.body.description,
