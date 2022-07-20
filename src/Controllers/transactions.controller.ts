@@ -16,11 +16,13 @@ export const createTransactionsController = async (req:Request, res:Response) =>
 }
 
 export const listTransactionsController = async  (req:Request, res:Response)=>{
-    const {foundCard, foundUser} = req.user
+    const { foundUser} = req.user
+    if(foundUser){
+        const userTransactions = await listTransactionsService(foundUser)
 
-    const userTransactions = await listTransactionsService(foundUser!)
 
     return res.status(200).json(userTransactions)
+
     
 }
 export const listCardTransactionsController = async  (req:Request, res:Response)=>{

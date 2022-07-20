@@ -56,7 +56,8 @@ describe("Get user profile",()=>{
             updated_at: response.body.updated_at,
             friendList:response.body.friendList,
             transactions:response.body.transactions,            
-            isActive:response.body.isActive
+            isActive:response.body.isActive,
+            authToken:response.body.authToken
                        
         }))
         

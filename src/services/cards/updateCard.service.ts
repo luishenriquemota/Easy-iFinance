@@ -56,6 +56,6 @@ const updateCardService = async (owner_id: string, card_id: number, updateData:I
     allowedUsers:updateCard.allowedUsers || []
   }
   
-  return {... updateCard, Owner: owner_id}
+  return returnUpdate
 }
 export default updateCardService
