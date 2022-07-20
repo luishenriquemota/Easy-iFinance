@@ -13,12 +13,10 @@ const listTransactionsService = async (foundUser:User) => {
 
     const cardRepository = AppDataSource.getRepository(Card)   
     const transactionsRepository = AppDataSource.getRepository(Transactions)
-    const userRepository = AppDataSource.getRepository(User)
-
-    await userRepository.find({transactions})
-        
-    const userTransactions = foundUser.transactions
     
+
+    const userTransactions = await transactionsRepository.find({where:{user:{id:foundUser.id}}})
+   
     if(!userTransactions){
         throw new AppError( 400, "User don't have transactions")
     }      

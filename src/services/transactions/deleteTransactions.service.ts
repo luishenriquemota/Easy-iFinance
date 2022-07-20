@@ -11,8 +11,11 @@ const deleteTransactionService = async (foundUser:User,transactions_id:string) =
             transactions_id: transactions_id
         }
     });
+    
 
-    const isUserTransaction = foundUser.transactions?.filter(transaction=> {
+    const userTransactions = await transactionsRepository.find({where:{user:{id:foundUser.id}}})
+
+    const isUserTransaction = userTransactions?.filter(transaction=> {
         return transaction.transactions_id.toString() === transactions_id})
         
     if(!findTransaction || !isUserTransaction){

@@ -79,6 +79,7 @@ describe("update transaction",  () =>{
             created_at:response.body.created_at,
             updated_at:response.body.updated_at
         }))        
+    
     })
     test("Should fail to update a user transaction transaction without token", async ()=>{  
         const login =  await request(app).post("/users/login").send(sucessLogin);
