@@ -34,7 +34,7 @@ https://easy-ifinance.herokuapp.com
 
 Segue abaixo alguns diagramas que podem lhe auxiliar a entender o fluxo de dados da nossa aplicação:
 
-![DER](https://i.postimg.cc/zGGT2Y1v/diagrams.png)
+![DER](https://i.postimg.cc/wjCzMrC0/diagrams.png)
 
 ---
 ## 3. Início Rápido
