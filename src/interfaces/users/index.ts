@@ -1,3 +1,7 @@
+import { Friends } from "../../entities/friends.entity";
+import { Transactions } from "../../entities/transactions.entity";
+import { User } from "../../entities/user.entity";
+
 export interface IUserCreate {
   name: string;
   email: string;
@@ -27,6 +31,8 @@ export interface IUserReturn {
   friendList_id?: Number;
   ownCardList_id?: Number;
   allowedCardList_id?: Number;
+  friendList:Friends[]
+  transactions?:Transactions[]
 }
 
 export interface Idecoded {

@@ -19,6 +19,6 @@ const updateUserService = async (id: string, changes: IUserUpdated): Promise<Use
   
   await userRepository.save(user)
 
-  return {... user, password: undefined, cards: undefined, transactions:undefined};
+  return {... user, password: undefined, cards: user.cards || [], transactions:user.transactions || []};
 };
 export default updateUserService;

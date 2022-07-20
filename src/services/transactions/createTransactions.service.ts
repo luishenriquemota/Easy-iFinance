@@ -22,6 +22,13 @@ const createTransactionsService = async (
   newTransaction.card = foundCard;
   newTransaction.user = foundUser;
 
+
+const createTransactionsService = async (foundUser:User, foundCard:Card,{description,category,value, type}:ITransaction) => {
+    if(!description || !category ||!value|| !type ){
+        throw new AppError(400, "A transaction need a description, category, value and type")
+    }
+    const transactionsRepository = AppDataSource.getRepository(Transactions)
+
   const emailData: IEmailRequest = {
     subject: "Relatorio da transação",
     text: `<h1>Transação criada.</h1>
@@ -41,15 +48,19 @@ const createTransactionsService = async (
 
   await transactionsRepository.save(newTransaction);
 
-  const returingTransaction = {
-    transactions_id: newTransaction.transactions_id,
-    description: newTransaction.description,
-    value: newTransaction.value,
-    type: newTransaction.type,
-    cardId: newTransaction.card.id,
-    userId: newTransaction.user.id,
-  };
-  return returingTransaction;
-};
+    const returingTransaction = {
+        transactions_id: newTransaction.transactions_id,
+        description: newTransaction.description,
+        value: newTransaction.value,
+        type: newTransaction.type,
+        category:newTransaction.category,
+        card_id: newTransaction.card.id,
+        users_id: newTransaction.user.id,
+        created_at:newTransaction.created_at,
+        updated_at:newTransaction.updated_at
+    } 
+    return returingTransaction
+}
+
 
 export default createTransactionsService;

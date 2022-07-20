@@ -8,7 +8,7 @@ const authToken = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization
 
   if(!token){
-    throw new AppError(401, "invalid token.")
+    throw new AppError(401, "Missing authorization token")
   }
 
   const splitToken = token.split(" ")
