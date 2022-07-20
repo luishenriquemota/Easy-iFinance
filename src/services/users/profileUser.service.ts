@@ -11,6 +11,6 @@ const profileUserService = async (id: string) => {
     throw new AppError(409, "User not found");
   }
 
-  return {...user, password: undefined};
+  return {...user, password: undefined,transactions:user.transactions || []};
 };
 export default profileUserService;
