@@ -25,7 +25,7 @@ O projeto consiste em uma aplicação Backend que visa facilitar o monitoramento
 - [TypeORM](https://typeorm.io/)
 
 Url base da nossa aplicação:
-http://linkaqui.com
+https://easy-ifinance.herokuapp.com
 
 ---
 ## 2. Diagrama ER
@@ -84,7 +84,7 @@ Registre-se na aplicação, solicitando uma requisição do tipo POST no endpoin
 ### Exemplo de Request:
 ```
 POST /users
-Host: https://linkdodeploy.com/
+Host: https://easy-ifinance.herokuapp.com
 Authorization: None
 Content-type: application/json
 ```
@@ -95,7 +95,7 @@ Content-type: application/json
 	"name": "usuario",
 	"email": "usuario@mail.com",
 	"password": "1234",
-	"birth_date": "22/01/1996"
+	"birth_date": "22-01-1996"
 }
 ```
 
@@ -110,8 +110,8 @@ Content-type: application/json
 	"name": "Eduardo",
 	"email": "edu@mail.com",
 	"birth_date": "22/01/1996",
-  "created_at": "18/06/2022 10:52:35",
-  "updated_at": "18/06/2022 10:52:35"
+  	"created_at": "18-06-2022 10:52:35",
+  	"updated_at": "18-06-2022 10:52:35"
 }
 ```
 ### Possíveis Erros:
@@ -129,7 +129,7 @@ Faça Login na aplicação, solicitando uma requisição do tipo POST no endpoin
 ### Exemplo de Request:
 ```
 POST /users/login
-Host: https://linkdodeploy.com/
+Host: https://easy-ifinance.herokuapp.com
 Authorization: None
 Content-type: application/json
 ```
@@ -160,23 +160,530 @@ Content-type: application/json
 ---
 ## 5. Endpoints
 
+Consideramos que a partir daqui, você já se cadastrou e se autenticou na aplicação.
+
 [ Voltar para o topo ](#tabela-de-conteúdos)
 
 ### Índice
 
 - [Users](#1-users)
-    - [POST - /users](#11-criação-de-usuário)
-    - [POST - /users/login](#12-login-de-usuário)
-    - [GET - /users/profile](#13-listando-usuário)
-    - [PATCH - /users](#14-atualizar-usuário)
-    - [DELETE - /users](#15-deletar-usuário)
+    - [GET - /users/profile](#11-listando-usuário)
+    - [PATCH - /users](#12-atualizar-usuário)
+    - [DELETE - /users](#13-deletar-usuário)
 - [Cards](#2-cards)
     - [POST - /cards](#21-criação-de-cards)
     - [GET - /cards/:card_id](#22-listagem-de-card-especifico)
     - [GET - /cards](#23-listagem-de-cards-disponíveis)
     - [PATCH - /cards/:card_id](#24-atualização-de-card)
     - [DELETE - /cards/:card_id](#25-deleção-de-card)
-- [Cart](#3-cart)
-- [Users](#4-buys)
+- [Transactions](#3-transactions)
+    - [POST - /transactions](#31-criação-de-transactions)
+    - [GET - /transactions/userTransactions](#32-listagem-de-transactions)
+    - [GET - /transactions/:card_id](#33-listagem-de-transactions-de-cartão-especifico)
+    - [PATCH - /transactions/:transaction_id](#34-atualização-de-transactions)
+    - [DELETE - /transactions/:transaction_id](#35-deleção-de-transactions)
+- [Friendlist](#4-friendlist)
+    - [POST - /friends/:user_id](#41-adição-de-amigo)
+    - [DELETE - /friends/:friend_id](#42-remoção-de-amigo)
+    - [GET - /friends/:user_id](#43-listagem-de-todos-amigos)
+    - [GET - /friends/:friend_id](#44-listagem-de-amigo-especifico)
 
 ---
+
+## 1. Users
+Estas são as rotas relacionadas ao CRUD de usuários.
+
+[ Voltar para Endpoints ](#5-endpoints)
+
+### 1.1. Listando usuário
+### `/users/profile`
+
+Retorna os dados do usuário que realizou a requisição.
+
+### Exemplo de Request:
+```
+POST /users/profile
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+200 Success
+```
+
+```json
+{
+	"id": "ada47hdabdsa91821webgda72avnckash",
+    	"name": "user",
+    	"email": "user@mail.com",
+    	"password":
+    	"birth_date": "12-05-1999",
+    	"created_at": "20-07-2022 13:13:31",
+    	"updated_at": "20-07-2022 13:13:31",
+    	"isActive": true,
+	"cards": [],
+	"transactions": []
+}
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 409 Not available   | User not found |
+| 401 Unauthorized   | Invalid token |
+
+---
+### 1.2. Atualizar usuário
+### `/users`
+
+Atualiza os dados do usuário que realizou a requisição
+
+### Exemplo de Request:
+```
+PATCH /users
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Corpo da Requisição:
+```json
+{
+	"name": "Kenzinho",
+}
+```
+### Exemplo de Response:
+```
+200 Success
+```
+```json
+{
+	"id": "ada47hdabdsa91821webgda72avnckash",
+    	"name": "Kenzinho",
+    	"email": "user@mail.com",
+    	"password":
+    	"birth_date": "12-05-1999",
+    	"created_at": "20-07-2022 13:13:31",
+    	"updated_at": "20-07-2022 13:13:31",
+    	"isActive": true,
+	"cards": [],
+	"transactions": []
+}
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | User dont exists |
+| 401 Unauthorized   | Invalid token |
+
+---
+### 1.3. Deletar usuário
+### `/users`
+
+Deleta o usuário que realizou a requisição
+
+### Exemplo de Request:
+```
+DELETE /users
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+204 Success, no content
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 409 Not available   | User not found |
+| 401 Unauthorized   | Invalid token |
+
+---
+## 2. Cards
+Estas são as rotas relacionadas ao CRUD de cards.
+
+[ Voltar para Endpoints ](#5-endpoints)
+
+### 2.1. Criação de cards
+### `/cards`
+
+Registra um cartão para o usuário que realizou a requisição
+
+### Exemplo de Request:
+```
+POST /cards
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Corpo da Requisição:
+```json
+{
+	"name": "Cartão de Crédito",
+	"limit": 3000,
+	"type": "crédito",
+	"dueDate": "12-07-2024",
+	"closingDate": "15-07-2022"
+}
+```
+### Exemplo de Response:
+```
+201 Created
+```
+```json
+{
+	"id": 1,
+    	"name": "Cartão de Crédito",
+    	"limit": 3000,
+    	"type": "crédito",
+    	"dueDate": "12-07-2024",
+	"closingDate": "15-07-2022"
+    	"ownerId": "ada47hdabdsa91821webgda72avnckash",
+	"allowedUsers": []
+}
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | User not found |
+| 409 Not available   | Card already exists |
+| 401 Unauthorized   | Invalid token |
+
+---
+### 2.2. Listagem de card especifico
+### `/cards/:card_id`
+
+Lista os dados do card especificado.
+
+### Exemplo de Request:
+```
+GET /cards/:card_id
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+200 Success
+```
+```json
+{
+	"id": 1,
+    	"name": "Cartão de Crédito",
+    	"limit": 3000,
+    	"type": "crédito",
+    	"dueDate": "12-07-2024",
+	"closingDate": "15-07-2022"
+    	"ownerId": "ada47hdabdsa91821webgda72avnckash",
+	"allowedUsers": [],
+	"transactions": []
+}
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | Card not found |
+| 401 Unauthorized   | Invalid token |
+
+---
+### 2.3. Listagem de cards disponíveis
+### `/cards`
+
+Lista todos os cards disponíveis ao usuário que fez a requisição.
+
+### Exemplo de Request:
+```
+GET /cards
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+200 Success
+```
+```json
+[{
+	"id": 1,
+    	"name": "Cartão de Crédito",
+    	"limit": 3000,
+    	"type": "crédito",
+    	"dueDate": "12-07-2024",
+	"closingDate": "15-07-2022"
+    	"ownerId": "ada47hdabdsa91821webgda72avnckash",
+	"allowedUsers": [],
+	"transactions": []
+}]
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | Card not found |
+| 401 Unauthorized   | Invalid token |
+
+---
+### 2.4. Atualização de card
+### `/cards/:card_id`
+
+Atualiza os dados de um cartão especifico.
+### Exemplo de Request:
+```
+PATCH /cards/card_id
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{
+	"name": "Cartão de Débito",
+	"limit": 4000,
+}
+```
+### Exemplo de Response:
+```
+200 Success
+```
+```json
+[{
+	"id": 1,
+    	"name": "Cartão de Débito",
+    	"limit": 4000,
+    	"type": "crédito",
+    	"dueDate": "12-07-2024",
+	"closingDate": "15-07-2022"
+    	"ownerId": "ada47hdabdsa91821webgda72avnckash",
+	"allowedUsers": [],
+	"transactions": []
+}]
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | Card not found |
+| 401 Unauthorized   | Invalid token |
+
+---
+### 2.5. Deleção de card
+### `/cards/:card_id`
+
+Deleta um cartão especifico.
+### Exemplo de Request:
+```
+DELETE /cards/card_id
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+204 Success, no content
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | Card not found |
+| 401 Unauthorized   | Invalid token |
+| 404 Not available   | User not found |
+
+---
+## 3. Transactions
+Estas são as rotas relacionadas ao CRUD de transactions.
+
+[ Voltar para Endpoints ](#5-endpoints)
+
+### 3.1. Criação de transactions
+### `/transactions`
+
+Registra uma transação para um cartão e usuário.
+
+### Exemplo de Request:
+```
+POST /transactions
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Corpo da Requisição:
+```json
+{
+	"description": "Assinatura Netflix",
+	"value": 54,
+	"category": "Assinatura de serviço de streaming",
+	"type": "Gasto no crédito",
+	"card_id": 1,
+	"user_id": "ada47hdabdsa91821webgda72avnckash"
+}
+```
+### Exemplo de Response:
+```
+201 Created
+```
+```json
+{
+	"id": "1",
+	"description": "Assinatura Netflix",
+	"value": 54,
+	"category": "Assinatura de serviço de streaming",
+	"type": "Gasto no crédito",
+	"cardId": 1,
+	"userId": "ada47hdabdsa91821webgda72avnckash"
+}
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | Card not exists |
+| 401 Unauthorized   | Invalid token |
+| 404 Not available   | User not exists |
+| 403 Unauthorized  | User is not the card owner |
+
+---
+### 3.2. Listagem de transactions
+### `/transactions/userTransactions`
+
+Lista as transações do usuário que fez a requisição.
+
+### Exemplo de Request:
+```
+GET /transactions/userTransactions
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+200 Success
+```
+```json
+{
+	"id": "1",
+	"description": "Assinatura Netflix",
+	"value": 54,
+	"created_at": "20-07-2022 13:35:13",
+	"updated_at": "20-07-2022 13:35:13",
+	"category": "Assinatura de serviço de streaming",
+	"type": "Gasto no crédito",
+	"cardId": 1,
+	"userId": "ada47hdabdsa91821webgda72avnckash"
+}
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | User not found |
+| 401 Unauthorized   | Invalid token |
+| 400 Invalid | User don't have transactions |
+
+---
+### 3.3. Listagem de transactions de cartão especifico
+### `/transactions/:card_id`
+
+Lista todas as transações de um cartão especifico.
+
+### Exemplo de Request:
+```
+GET /transactions/:card_id
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+200 Success
+```
+```json
+{
+	"id": "1",
+	"description": "Assinatura Netflix",
+	"value": 54,
+	"created_at": "20-07-2022 13:35:13",
+	"updated_at": "20-07-2022 13:35:13",
+	"category": "Assinatura de serviço de streaming",
+	"type": "Gasto no crédito",
+	"cardId": 1,
+	"userId": "ada47hdabdsa91821webgda72avnckash"
+}
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | User not found |
+| 401 Unauthorized   | Invalid token |
+| 400 Invalid | Card don't have transactions |
+
+---
+### 3.4. Atualização de transactions
+### `/transactions/:transaction_id`
+
+Atualiza os dados de uma transação especifica.
+
+### Exemplo de Request:
+```
+PATCH /transactions/:transaction_id
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Corpo da Requisição:
+```json
+{
+	"description": "Assinatura Disney Plus",
+	"value": 59,
+}
+```
+### Exemplo de Response:
+```
+200 Success
+```
+```json
+{
+	"id": "1",
+	"description": "Assinatura Disney Plus",
+	"value": 59,
+	"created_at": "20-07-2022 13:35:13",
+	"updated_at": "20-07-2022 13:35:13",
+	"category": "Assinatura de serviço de streaming",
+	"type": "Gasto no crédito",
+	"cardId": 1,
+	"userId": "ada47hdabdsa91821webgda72avnckash"
+}
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | Transaction not found |
+| 401 Unauthorized   | Invalid token |
+| 400 Invalid | Card don't have transactions |
+| 404 Not available   | User not exists |
+---
+### 3.5. Deleção de transactions
+### `/transactions/:transaction_id`
+
+Deleta uma transação específica
+
+### Exemplo de Request:
+```
+DELETE /transactions/:transaction_id
+Host: https://easy-ifinance.herokuapp.com
+Authorization: Bearer Token
+Content-type: application/json
+```
+### Exemplo de Response:
+```
+204 Success, no content
+```
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not available   | Transaction not found |
+| 401 Unauthorized   | Invalid token |
+| 400 Invalid | Card don't have transactions |
+| 404 Not available   | User not exists |
+---
+## 4. Friendlist
+Estas são as rotas relacionadas ao CRUD de friendlist.
+
+[ Voltar para Endpoints ](#5-endpoints)
