@@ -12,6 +12,7 @@ const listTransactionsService = async (foundUser:User) => {
     const cardRepository = AppDataSource.getRepository(Card)   
     
     const userTransactions = foundUser.transactions
+    console.log(foundUser.transactions)
 
     if(!userTransactions){
         throw new AppError( 400, "User don't have transactions")

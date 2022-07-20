@@ -17,8 +17,8 @@ const sucessCard = {
     name:"nubank", 
     limit:2000, 
     type:"credit", 
-    dueDate:"01/10/2022", 
-    closingDate:"20/12/2022"
+    dueDate:1, 
+    closingDate:20
 };
 const failCard = {
     limit:2000, 

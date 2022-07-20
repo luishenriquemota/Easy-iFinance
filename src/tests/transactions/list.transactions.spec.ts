@@ -79,9 +79,9 @@ describe("list transactions",  () =>{
         await request(app).post("/cards").set("Authorization", `Bearer ${token}`).send(sucessCard);
         
         const newTransaction = await request(app).post(`/transactions`).set("Authorization", `Bearer ${token}`).send(successTransaction)
-    
+        console.log(newTransaction.body)
         const response = await request(app).get(`/transactions/userTransactions`).set("Authorization", `Bearer ${token}`);
-        
+        console.log(response.body)
         expect(response.status).toBe(202)
         expect(response.body).toEqual(expect.arrayContaining([expect.objectContaining({
             transactions_id: newTransaction.body.transactions_id,
