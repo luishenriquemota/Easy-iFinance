@@ -17,9 +17,11 @@ const createUserService = async ({
   const users = await userRepository.find();
 
   const emailAlreadyExists = users.find((user) => user.email === email);
-
+  if(!name|| !email|| !password|| !birth_date){
+    throw new AppError(409, "User need a name, email, passowrd and birth date to be created.");
+  }
   if (emailAlreadyExists) {
-    throw new AppError(409, "Email already exists");
+    throw new AppError(409, "User with this email already exist");
   }
 
   const activationToken = (Math.random() + 1).toString(36).substring(2);
@@ -50,8 +52,11 @@ const createUserService = async ({
     name: user.name,
     email: user.email,
     birth_date: user.birth_date,
+    friendList: user.friendList || [],
     created_at: user.created_at,
     updated_at: user.updated_at,
+    isActive:user.isActive,
+    transactions:user.transactions || []
   };
 
   return returnUser

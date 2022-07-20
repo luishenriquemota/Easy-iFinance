@@ -10,12 +10,12 @@ const verifyCardExistance = async (
   next: NextFunction
 ) => {
     
-    const card_id = req.params.card_id || req.body.card_id
+    const card_id = parseInt(req.params.card_id) || parseInt(req.body.card_id)
     
     const cardRepository = AppDataSource.getRepository(Card)
 
     const foundCard = await cardRepository.findOneBy({
-        id:parseInt(card_id)
+        id:card_id
     })
     
     if(!foundCard){
