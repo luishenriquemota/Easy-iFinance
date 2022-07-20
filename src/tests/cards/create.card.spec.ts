@@ -98,7 +98,7 @@ describe("Create Card",  () =>{
 
         const response = await request(app).post("/cards").set("Authorization", `Bearer ${token}`).send(failCard);
         
-        expect(response.status).toBe(409)
+        expect(response.status).toBe(400)
         expect(response.body).toHaveProperty("message")
     })
     

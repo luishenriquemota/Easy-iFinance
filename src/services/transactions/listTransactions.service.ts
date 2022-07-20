@@ -14,7 +14,7 @@ const listTransactionsService = async (foundUser:User) => {
     const userTransactions = foundUser.transactions
 
     if(!userTransactions){
-        throw new AppError( 400, "User don't have transactions")
+        throw new AppError( 404, "User don't have transactions")
     }      
     
     const returnTransactions = Promise.all(userTransactions.map( async (transaction)=>{

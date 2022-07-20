@@ -15,7 +15,7 @@ const loginUserService =async ({email,password} : IUserLogin) => {
     
       
     if (!account||!bcrypt.compareSync(password, account.password!)) {
-      throw new AppError(404, "Wrong email/password")
+      throw new AppError(403, "Wrong email/password")
     }
 
     const token = jwt.sign({ id: account.id }, String(process.env.SECRET_KEY), {

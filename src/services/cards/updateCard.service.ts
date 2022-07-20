@@ -22,7 +22,7 @@ const updateCardService = async (owner_id: string, card_id: number, updateData:I
   }
   
   if(card!.Owner!.id !== user!.id) {   
-    throw new AppError(409, "User does not have permission.")
+    throw new AppError(403, "User does not have permission.")
   }
   
   updateData.Owner = user

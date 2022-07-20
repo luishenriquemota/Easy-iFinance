@@ -25,7 +25,7 @@ const addFriendService = async (user_id: string, friend_id: string) => {
 
   const verifyFriendShip = (await listFriends).find(item => item?.id === friend_id)
 
-  if(verifyFriendShip) throw new AppError(404, "you and this user are already friends.")
+  if(verifyFriendShip) throw new AppError(409, "you and this user are already friends.")
 
   const friendship = new Friendlist
   friendship.user = user
