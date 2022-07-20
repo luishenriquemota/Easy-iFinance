@@ -23,6 +23,7 @@ const createTransactionsService = async (foundUser:User, foundCard:Card,{descrip
   newTransaction.value = value;
   newTransaction.type = type;
   newTransaction.card = foundCard;
+
   newTransaction.user = foundUser;  
 
 // const createTransactionsService = async (foundUser:User, foundCard:Card,{description,category,value, type}:ITransaction) => {
