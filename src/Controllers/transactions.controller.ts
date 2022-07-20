@@ -16,9 +16,9 @@ export const createTransactionsController = async (req:Request, res:Response) =>
 }
 
 export const listTransactionsController = async  (req:Request, res:Response)=>{
-    const {id} = req.user
+    const {foundCard, foundUser} = req.user
 
-    const userTransactions = await listTransactionsService(id)
+    const userTransactions = await listTransactionsService(foundUser!)
 
     return res.status(202).json(userTransactions)
     

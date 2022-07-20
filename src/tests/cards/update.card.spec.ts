@@ -72,14 +72,12 @@ describe("Update a card",  () =>{
             owner_id:response.body.owner_id
         }))      
     })
-    test("Should fail update a card without token", async ()=>{
+    test("Should fail update a card without token", async ()=>{   
       
-        const login =  await request(app).post("/users/login").send(sucessLogin);
-        const {token} = login.body;
        
-        const response = await request(app).patch(`/cards/1`).set("Authorization", `Bearer ${token}`).send(updateData);
+        const response = await request(app).patch(`/cards/1`).send(updateData);
 
-        expect(response.status).toBe(403)
+        expect(response.status).toBe(401)
         expect(response.body).toEqual(expect.objectContaining({
             message:"Missing authorization token"
         }))        

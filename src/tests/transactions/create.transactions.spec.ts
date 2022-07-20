@@ -81,8 +81,10 @@ describe("Create a transaction",  () =>{
             category:response.body.category,
             value:response.body.value,
             type:response.body.type,
-            cardId:response.body.cardId,
-            userId:response.body.transactions_id
+            card_id:response.body.card_id,
+            users_id:response.body.users_id,
+            created_at:response.body.created_at,
+            updated_at:response.body.updated_at
         }))            
     })
 
@@ -100,7 +102,7 @@ describe("Create a transaction",  () =>{
         
         const response = await request(app).post(`/transactions`).send(failTransaction);
      
-        expect(response.status).toBe(403)
+        expect(response.status).toBe(401)
         expect(response.body).toEqual(expect.objectContaining({
             message:"Missing authorization token"
         }))            

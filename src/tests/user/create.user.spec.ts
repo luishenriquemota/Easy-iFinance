@@ -7,7 +7,7 @@ import activateUserService from "../../services/users/activateUser.service"
 
 const sucessUser = {
     "name":"teste",
-    "email":"teste@outlook.com",
+    "email":"paulo.morolol@gmail.com",
     "password":"senhaforte@123",
     "birth_date":"05/28/1992"
 }
@@ -24,8 +24,9 @@ describe("Create new user",()=>{
 
     beforeAll( async ()=>{
         await AppDataSource.initialize()
-        .then((res)=> (connection =res))
-        .catch((err)=>console.error("Failure on Database Initialization", err))
+      .then((res) => (connection = res))
+      .catch((err) => {
+        console.error("Error during Data Source initialization", err);})
     })
 
     afterAll( async ()=>{
@@ -33,8 +34,10 @@ describe("Create new user",()=>{
     })
     
     test("Should create a new user", async ()=>{
+
         const response = await request(app).post("/users").send(sucessUser);
-        const userRepository = AppDataSource.getRepository(User)
+    
+        const userRepository = AppDataSource.getRepository(User);
         if(response.body.id){
             const foundUser = await userRepository.findOneBy({
                 id:response.body.id

@@ -7,12 +7,12 @@ import activateUserService from "../../services/users/activateUser.service"
 
 const sucessUser = {
     "name":"teste",
-    "email":"teste@outlook.com",
+    "email":"paulo.morolol@gmail.com",
     "password":"senhaforte@123",
     "birth_date":"05/28/1992"
 }
 const sucessLogin ={
-    "email":"teste@outlook.com",
+    "email":"paulo.morolol@gmail.com",
     "password":"senhaforte@123"
 }
 
@@ -70,7 +70,7 @@ describe("Login a new User",()=>{
 
         const response = await request(app).post("/users/login").send(failLogin)
 
-        expect(response.status).toBe(401)
+        expect(response.status).toBe(404)
         expect(response.body).toEqual(expect.objectContaining({
             message:"Wrong email/password"            
         }))

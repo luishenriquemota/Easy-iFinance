@@ -33,15 +33,28 @@ const updateCardService = async (owner_id: string, card_id: number, updateData:I
   await cardRepository.save(updateCard)
 
 
-  const returnUpdate = {
+  const returnUpdate = updateCard.type === "credit"?{
     id: updateCard.id,
     name: updateCard.name,    
     limit: updateCard.limit,
     type: updateCard.type,
+    created_at:updateCard.created_at,
+    updated_at:updateCard.updated_at,
+    transactions:updateCard.transactions || [],
     dueDate: updateCard.dueDate,
     closingDate: updateCard.closingDate,
-    ownerId: updateCard.Owner.id,
-    allowedUsers: updateCard.allowedUsers
+    owner_id: updateCard.Owner.id,
+    allowedUsers: updateCard.allowedUsers || []
+  }:{
+    id:updateCard.id,
+    name:updateCard.name,
+    limit:updateCard.limit,
+    type:updateCard.type,
+    created_at: updateCard.created_at,
+    updated_at: updateCard.updated_at,
+    transactions:updateCard.transactions || [],
+    owner_id:updateCard.Owner.id,
+    allowedUsers:updateCard.allowedUsers || []
   }
   
   return returnUpdate

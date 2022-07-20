@@ -36,25 +36,25 @@ const updateData = {
 
 describe("update transaction",  () =>{
     let connection:DataSource
-    let token =""
+
     beforeAll( async ()=>{
         await AppDataSource.initialize()
         .then((res)=> (connection =res))
         .catch((err)=>console.error("Failure on Database Initialization", err))
         const newUser = await request(app).post("/users").send(sucessUser);
         const userRepository = AppDataSource.getRepository(User)
-        if(newUser.body.id){
-            const foundUser = await userRepository.findOneBy({
-                id:newUser.body.id
-            })
+        const foundUser = await userRepository.findOneBy({
+            id:newUser.body.id
+        })
+            
             if(foundUser){
                 const activation = await activateUserService(foundUser.authToken!)
             }
-        } 
+        
         const login =  await request(app).post("/users/login").send(sucessLogin);
-        token = login.body.token
+        const {token} = login.body
         await request(app).post("/cards").set("Authorization", `Bearer ${token}`).send(sucessCard);
-        await request(app).post(`/transactions`).set("Authorization", `Bearer ${token}`).send(successTransaction)
+        
     })
 
     afterAll( async ()=>{
@@ -62,15 +62,33 @@ describe("update transaction",  () =>{
     })   
     
 
-    test("Should update a user transaction", async ()=>{        
-        const response = await request(app).patch(`/transactions/1`).set("Authorization", `Bearer ${token}`).send(updateData);
-
+    test("Should update a user ", async ()=>{  
+        const login =  await request(app).post("/users/login").send(sucessLogin);
+        const {token} = login.body      
+        const newTransaction = await request(app).post(`/transactions`).set("Authorization", `Bearer ${token}`).send(successTransaction)
+        const response = await request(app).patch(`/transactions/${newTransaction.body.transactions_id}`).set("Authorization", `Bearer ${token}`).send(updateData);
         expect(response.status).toBe(202) 
-        expect(response.body).toHaveProperty("transactions_id")
-        expect(response.body).toHaveProperty("description")
-        expect(response.body).toHaveProperty("category")
-        expect(response.body).toHaveProperty("value")
-        expect(response.body).toHaveProperty("type")       
+        expect(response.body).toEqual(expect.objectContaining({
+            transactions_id:response.body.transactions_id,
+            description:response.body.description,
+            category:response.body.category,
+            value:response.body.value,
+            type:response.body.type,
+            card_id:response.body.card_id,
+            users_id:response.body.users_id,
+            created_at:response.body.created_at,
+            updated_at:response.body.updated_at
+        }))        
+    })
+    test("Should fail to update a user transaction transaction without token", async ()=>{  
+        const login =  await request(app).post("/users/login").send(sucessLogin);
+        const {token} = login.body      
+        const response = await request(app).patch(`/transactions/1`).send(updateData);
+        
+        expect(response.status).toBe(401)
+        expect(response.body).toEqual(expect.objectContaining({
+            message:"Missing authorization token"
+        }))           
     })
 
 

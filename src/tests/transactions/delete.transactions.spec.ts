@@ -57,7 +57,17 @@ describe("delete transaction",  () =>{
     afterAll( async ()=>{
         await connection.destroy()
     })  
+
+    test("Should fail to delete a user transaction without token", async ()=>{        
     
+        const response = await request(app).delete(`/transactions/1`);
+       
+        
+        expect(response.status).toBe(401)
+        expect(response.body).toEqual(expect.objectContaining({
+            message:"Missing authorization token"
+        }))                       
+    })
 
     test("Should delete a user transaction", async ()=>{        
     
@@ -66,6 +76,7 @@ describe("delete transaction",  () =>{
         
         expect(response.status).toBe(204)           
     })
+    
 
 
 

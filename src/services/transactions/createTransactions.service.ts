@@ -29,8 +29,10 @@ const createTransactionsService = async (foundUser:User, foundCard:Card,{descrip
         value: newTransaction.value,
         type: newTransaction.type,
         category:newTransaction.category,
-        cardId: newTransaction.card.id,
-        userId: newTransaction.user.id
+        card_id: newTransaction.card.id,
+        users_id: newTransaction.user.id,
+        created_at:newTransaction.created_at,
+        updated_at:newTransaction.updated_at
     } 
     return returingTransaction
 }

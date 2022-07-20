@@ -35,7 +35,7 @@ describe("Create Card",  () =>{
         await AppDataSource.initialize()
         .then((res)=> (connection =res))
         .catch((err)=>console.error("Failure on Database Initialization", err))
-        await request(app).post("/users").send(sucessUser);  
+        
     })
 
     afterAll( async ()=>{
@@ -43,8 +43,10 @@ describe("Create Card",  () =>{
     })
 
     test("Should create a new card", async ()=>{       
-              
+        const newUser = await request(app).post("/users").send(sucessUser); 
+        
         const login =  await request(app).post("/users/login").send(sucessLogin);
+
         const {token} = login.body;
 
         const response = await request(app).post("/cards").set("Authorization", `Bearer ${token}`).send(sucessCard);
@@ -61,7 +63,8 @@ describe("Create Card",  () =>{
             dueDate:response.body.dueDate,
             closingDate:response.body.closingDate,
             transactions:response.body.transactions,
-            owner_id:response.body.owner_id
+            owner_id:response.body.owner_id,
+            allowedUsers:response.body.allowedUsers
         }:{          
             id:response.body.id,
             name:response.body.name,
@@ -70,7 +73,8 @@ describe("Create Card",  () =>{
             created_at: response.body.created_at,
             updated_at: response.body.updated_at,
             transactions:response.body.transactions,
-            owner_id:response.body.owner_id
+            owner_id:response.body.owner_id,
+            allowedUsers:response.body.allowedUsers
         }))
     })
 
@@ -78,6 +82,7 @@ describe("Create Card",  () =>{
           
         const login =  await request(app).post("/users/login").send(sucessLogin);
         const {token} = login.body;
+
         await request(app).post("/cards").set("Authorization", `Bearer ${token}`).send(sucessCard)
         const response = await request(app).post("/cards").set("Authorization", `Bearer ${token}`).send(sucessCard);
 
@@ -96,11 +101,12 @@ describe("Create Card",  () =>{
         expect(response.status).toBe(409)
         expect(response.body).toHaveProperty("message")
     })
+    
     test("Should fail to create a card without token", async ()=>{    
         
         const response = await request(app).post("/cards").send(sucessCard);
         
-        expect(response.status).toBe(403)
+        expect(response.status).toBe(401)
         expect(response.body).toEqual(expect.objectContaining({
             message:"Missing authorization token"
         })) 

@@ -21,7 +21,7 @@ const createCardService = async (id: string, {name, limit, type, dueDate, closin
    const card = await cardRepository.findOneBy({name})
       
    if (card) {
-     throw new AppError(409, "Card already exists") 
+     throw new AppError(409, "Card already exist") 
    }
 
 
@@ -32,11 +32,21 @@ const createCardService = async (id: string, {name, limit, type, dueDate, closin
     newCard.limit = limit
     newCard.type = type
     newCard.Owner = user
-    newCard.allowedUsers = []
+
+    const returingCard ={
+      name :newCard.name  ,
+      limit :newCard.limit,
+      type :newCard.type,
+      owner_id: user.id,
+      created_at:newCard.created_at,
+      updated_at:newCard.updated_at,
+      transactions:newCard.transactions||[],
+      alloedUsers:newCard.allowedUsers || []
+    }
     
     await cardRepository.save(newCard)
 
-    return  {... newCard, Owner: user.id}
+    return  returingCard
   }
 
   if(!closingDate || !dueDate || !limit) {
@@ -49,11 +59,25 @@ const createCardService = async (id: string, {name, limit, type, dueDate, closin
   newCard.dueDate = dueDate
   newCard.closingDate = closingDate
   newCard.Owner = user
-  newCard.allowedUsers = []
   
   await cardRepository.save(newCard)
+  
 
-  return {... newCard, Owner: user.id}
+  const returingCard ={
+    id:newCard.id,
+    name :newCard.name  ,
+    limit :newCard.limit,
+    type :newCard.type,
+    dueDate :newCard.dueDate,
+    closingDate :newCard.closingDate,
+    owner_id: user.id,
+    created_at:newCard.created_at,
+    updated_at:newCard.updated_at,
+    transactions:newCard.transactions||[],
+    allowedUsers:newCard.allowedUsers || []
+  }
+
+  return returingCard
 
 }  
 export default createCardService

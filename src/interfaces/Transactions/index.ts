@@ -4,7 +4,7 @@ export class ITransaction{
     value: number
     category:string
     type:string
-    card_id:string
+    card_id:number
     users_id:string
 }
 
@@ -13,8 +13,14 @@ export class IUpdateTransaction{
     value?: number
     category?:string
     type?:string
-    card_id?:string
+    card_id?:number
     users_id?:string
     created_at?:Date
     updated_at?:Date
+}
+
+export class IListTransaction extends ITransaction{
+    transactions_id: string
+    created_at:Date
+    updated_at:Date
 }

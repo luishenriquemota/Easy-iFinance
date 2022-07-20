@@ -7,12 +7,12 @@ import activateUserService from "../../services/users/activateUser.service"
 
 const sucessUser = {
     "name":"teste",
-    "email":"teste@outlook.com",
+    "email":"paulo.morolol@gmail.com",
     "password":"senhaforte@123",
     "birth_date":"05/28/1992"
 }
 const sucessLogin ={
-    "email":"teste@outlook.com",
+    "email":"paulo.morolol@gmail.com",
     "password":"senhaforte@123"
 }
 const updatedData = {
@@ -59,7 +59,8 @@ describe("Update user profile",()=>{
             updated_at: response.body.updated_at,
             isActive:response.body.isActive,
             friendList:response.body.friendList,
-            transactions:response.body.transactions
+            transactions:response.body.transactions,
+            authToken:response.body.authToken
         }))
         
         
@@ -69,9 +70,9 @@ describe("Update user profile",()=>{
         
         const response = await request(app).patch("/users").send(updatedData)
 
-        expect(response.status).toBe(403)
+        expect(response.status).toBe(401)
         expect(response.body).toEqual(expect.objectContaining({
-            message:"Missing Authorization token"
+            message:"Missing authorization token"
         }))
     })
 })

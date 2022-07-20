@@ -17,8 +17,8 @@ const sucessCard = {
     name:"nubank", 
     limit:2000, 
     type:"credit", 
-    dueDate:"01/10/2022", 
-    closingDate:"20/12/2022"
+    dueDate: new Date ("01/10/2022"), 
+    closingDate: new Date("12/12/2022")
 };
 
 describe("List cards",  () =>{
@@ -45,6 +45,7 @@ describe("List cards",  () =>{
         const newCard = await request(app).post("/cards").set("Authorization", `Bearer ${token}`).send(sucessCard);
 
         const response = await request(app).get("/cards").set("Authorization", `Bearer ${token}`);
+        
         expect(response.status).toBe(200)
         expect(response.body).toEqual(expect.arrayContaining([expect.objectContaining({          
             id: newCard.body.id,
@@ -67,7 +68,7 @@ describe("List cards",  () =>{
         const newCard = await request(app).post("/cards").set("Authorization", `Bearer ${token}`).send(sucessCard);
 
         const response = await request(app).get("/cards");
-        expect(response.status).toBe(403)
+        expect(response.status).toBe(401)
         expect(response.body).toEqual(expect.objectContaining({
             message:"Missing authorization token"
         }))        
@@ -91,7 +92,8 @@ describe("List cards",  () =>{
             dueDate:response.body.dueDate,
             closingDate:response.body.closingDate,
             transactions:response.body.transactions,
-            owner_id:response.body.owner_id
+            owner_id:response.body.owner_id,
+            allowedUsers:response.body.allowedUsers
         }:{          
             id:response.body.id,
             name:response.body.name,
@@ -100,14 +102,15 @@ describe("List cards",  () =>{
             created_at: response.body.created_at,
             updated_at: response.body.updated_at,
             transactions:response.body.transactions,
-            owner_id:response.body.owner_id
+            owner_id:response.body.owner_id,
+            allowedUsers:response.body.allowedUsers
         }))       
     })
     test("Should fail to list one card without token", async ()=>{              
 
         const response = await request(app).get(`/cards/1`);
 
-        expect(response.status).toBe(403)
+        expect(response.status).toBe(401)
         expect(response.body).toEqual(expect.objectContaining({
             message:"Missing authorization token"
         }))     

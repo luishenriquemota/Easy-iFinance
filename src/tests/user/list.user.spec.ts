@@ -7,12 +7,12 @@ import activateUserService from "../../services/users/activateUser.service"
 
 const sucessUser = {
     "name":"teste",
-    "email":"teste@outlook.com",
+    "email":"paulo.morolol@gmail.com",
     "password":"senhaforte@123",
     "birth_date":"05/28/1992"
 }
 const sucessLogin ={
-    "email":"teste@outlook.com",
+    "email":"paulo.morolol@gmail.com",
     "password":"senhaforte@123"
 }
 
@@ -67,7 +67,7 @@ describe("Get user profile",()=>{
         
         const response = await request(app).get("/users/profile")
 
-        expect(response.status).toBe(403)
+        expect(response.status).toBe(401)
         expect(response.body).toEqual(expect.objectContaining({
             message:"Missing authorization token"            
         }))

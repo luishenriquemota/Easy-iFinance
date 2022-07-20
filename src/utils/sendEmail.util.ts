@@ -22,10 +22,11 @@ const sendEmail = async ({ subject, text, to }: IEmailRequest) => {
       html :text
     })
     .then(() => {
-      //console.log("Email send with sucess");
+      console.log("Email send with sucess");
     })
     .catch((err) => {
-      throw new AppError(500, "error sending email");
+      //console.log(err)
+      //throw new AppError(500, "error sending email");
     });
 };
 

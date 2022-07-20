@@ -51,7 +51,7 @@ describe("Delete a card",  () =>{
         
         const response = await request(app).delete(`/cards/1`);
         
-        expect(response.status).toBe(403) 
+        expect(response.status).toBe(401) 
         expect(response.body).toEqual(expect.objectContaining({
             message:"Missing authorization token"
         }))    
