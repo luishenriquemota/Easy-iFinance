@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
 
 @Entity("friendlist")
@@ -7,8 +7,9 @@ export class Friendlist {
   readonly id: number;
 
   @ManyToOne((type) => User, (user) => user.id)
-  user1: User;
+  user: User;
 
   @ManyToOne((type) => User, (user) => user.id)
-  user2: User;
+  friend: User;
+
 }

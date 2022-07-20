@@ -31,19 +31,7 @@ const updateCardService = async (owner_id: string, card_id: number, updateData:I
   const updateCard = {...card, ...updateData}
 
   await cardRepository.save(updateCard)
-
-
-  const returnUpdate = {
-    id: updateCard.id,
-    name: updateCard.name,    
-    limit: updateCard.limit,
-    type: updateCard.type,
-    dueDate: updateCard.dueDate,
-    closingDate: updateCard.closingDate,
-    ownerId: updateCard.Owner.id,
-    allowedUsers: updateCard.allowedUsers
-  }
   
-  return returnUpdate
+  return {... updateCard, Owner: owner_id}
 }
 export default updateCardService

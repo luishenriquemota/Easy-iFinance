@@ -18,10 +18,10 @@ export class Card {
   type: string
 
   @Column()
-  dueDate?: Date
+  dueDate?: number
 
   @Column()
-  closingDate?: Date
+  closingDate?: number
 
   @CreateDateColumn()
   created_at: Date

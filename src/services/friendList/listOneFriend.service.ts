@@ -6,26 +6,21 @@ import { AppError } from "../../errors/appError";
 const listOneFriendService = async (friend_id: string, user_id: string) => {
   const userRepository = AppDataSource.getRepository(User);
   const friendlistRepository = AppDataSource.getRepository(Friendlist);
-  const friendlist = await friendlistRepository.find();
 
-  const friendById = await userRepository.findOneBy({
-    id: friend_id,
-  });
+  const user = await userRepository.findOne({where:{id: user_id}, relations:['friendList']})
 
-  if (!friendById) {
-    throw new Error("Friend not found");
-  }
+    const friendsLists = Promise.all(
+    user!.friendList.map(async (list) => {
+    const friendTable = await friendlistRepository.findOne({where:{id: list.id}, relations:['friend']})
 
-  const friendship = friendlist.find(
-    (line) =>
-      (line.user1.id === user_id && line.user2.id === friend_id) ||
-      (line.user1.id === friend_id && line.user2.id === user_id)
-  );
+      return friendTable!.friend // fazer um forech para retornar o friendlist como undefined
+    })
+  )
 
-  if (!friendship) {
-    throw new AppError(409, "Users are not friends");
-  }
-  return friendship;
+  const friend = (await friendsLists).find(entity => entity?.id === friend_id)
+
+  if(!friend) throw new AppError(404, "Friend not found.")
+
+  return friend
 };
-
 export default listOneFriendService;

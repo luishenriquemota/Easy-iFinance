@@ -4,8 +4,8 @@ export interface ICardCreate {
   name: string
   limit: number
   type: string
-  dueDate?: Date
-  closingDate?: Date
+  dueDate?: number
+  closingDate?: number
 }
 
 export interface ICardList {
@@ -13,8 +13,8 @@ export interface ICardList {
   name: string
   limit: number
   type: string
-  dueDate: Date
-  closingDate: Date
+  dueDate: number
+  closingDate: number
   updated_at: Date
   ownerId: string
   allowedUsers: User[]
@@ -25,8 +25,8 @@ export interface ICardUpdate {
   name?: string
   limit?: number
   type?: string
-  dueDate?: Date
-  closingDate?: Date
+  dueDate?: number
+  closingDate?: number
   updated_at?: Date
   Owner: User
 }

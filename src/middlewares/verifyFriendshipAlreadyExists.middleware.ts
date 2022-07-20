@@ -8,6 +8,14 @@ const verifyFriendshipAlreadyExists = async (
   res: Response,
   next: NextFunction
 ) => {
+
+  
+
+};
+
+export default verifyFriendshipAlreadyExists;
+
+
   // const userRepository = AppDataSource.getRepository(User);
   // const friendlistRepository = AppDataSource.getRepository(Friendlist);
   // const user = await userRepository.find();
@@ -40,6 +48,3 @@ const verifyFriendshipAlreadyExists = async (
   //     throw new Error("Users are already friends")
   //   }
   //   next()
-};
-
-export default verifyFriendshipAlreadyExists;
