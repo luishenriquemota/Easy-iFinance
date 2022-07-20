@@ -2,7 +2,6 @@ import { Router } from "express";
 import { createTransactionsController, deleteTransactionsController, listCardTransactionsController, listTransactionsController, updateTransactionsController } from "../Controllers/transactions.controller";
 import authToken from "../middlewares/authtoken.middleware";
 import verifyCardExistance from "../middlewares/verifyCardExistance.middlewares";
-import verifyUserCardRelation from "../middlewares/verifyTransactionAuthorization.middlewares";
 import verifyUserExistance from "../middlewares/verifyUserExistance";
 
 const routes = Router()

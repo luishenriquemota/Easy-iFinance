@@ -26,6 +26,8 @@ const createTransactionsService = async (
   newTransaction.card = foundCard;
   newTransaction.user = foundUser;  
 
+  
+
   const emailData: IEmailRequest = {
     subject: "Relatorio da transação",
     text: `<h1>Transação criada.</h1>
