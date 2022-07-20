@@ -44,7 +44,7 @@ export class User {
   @OneToMany(type => Card, cards => cards.Owner)
   cards?:Card[]
 
-  @OneToMany(type => Transactions, transactions => transactions.user)
+  @OneToMany(type => Transactions, transactions => transactions.user, {eager: true})
   transactions?: Transactions[]
 
   @OneToMany( type => Friendlist, (friendList) => friendList.user, {eager: true})

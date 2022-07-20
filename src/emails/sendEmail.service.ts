@@ -7,7 +7,6 @@ const sendEmailService = async ({subject,text,to}: IEmailRequest) => {
 
   await sendEmail({subject,text:htmlText,to})
 
-
 }
 
 export default sendEmailService
