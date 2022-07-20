@@ -9,7 +9,7 @@ import {
   JoinTable
 } from "typeorm";
 import { Card } from "./card.entity";
-import { Friends } from "./friends.entity";
+import { Friendlist } from "./friendlist.entity";
 import { Transactions } from "./transactions.entity";
 
 @Entity()
@@ -44,12 +44,12 @@ export class User {
   @OneToMany(type => Card, cards => cards.Owner)
   cards?:Card[]
 
-  @OneToMany(type => Transactions, transactions => transactions.user, { eager:true } )
+  @OneToMany(type => Transactions, transactions => transactions.user)
   transactions?: Transactions[]
 
-  @ManyToMany( type => Friends, {eager: true})
+  @OneToMany( type => Friendlist, (friendList) => friendList.user, {eager: true})
   @JoinTable()
-  friendList: Friends[]
+  friendList: Friendlist[]
 }
 
 

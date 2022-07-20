@@ -32,7 +32,6 @@ const updateCardService = async (owner_id: string, card_id: number, updateData:I
 
   await cardRepository.save(updateCard)
 
-
   const returnUpdate = updateCard.type === "credit"?{
     id: updateCard.id,
     name: updateCard.name,    
@@ -57,6 +56,6 @@ const updateCardService = async (owner_id: string, card_id: number, updateData:I
     allowedUsers:updateCard.allowedUsers || []
   }
   
-  return returnUpdate
+  return {... updateCard, Owner: owner_id}
 }
 export default updateCardService

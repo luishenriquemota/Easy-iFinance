@@ -4,15 +4,17 @@ import {Card} from "../../entities/card.entity"
 import { AppError } from "../../errors/appError";
 import {User} from "../../entities/user.entity"
 
-const createCardService = async (id: string, {name, limit, type, dueDate, closingDate}: ICardCreate)=>  {
-  if ( !name || !type || !limit) {
+
+const createCardService = async (owner_id: string, {name, limit, type, dueDate, closingDate}: ICardCreate)=>  {
+   if ( !name || !type || !limit) {
     throw new AppError(409,"Fields name, type and limit  are required.")   
   }
   
   const userRepository = AppDataSource.getRepository(User)
   const cardRepository = AppDataSource.getRepository(Card)
 
-  const user = await userRepository.findOneBy({id})  
+  const user = await userRepository.findOneBy({id: owner_id})  
+
 
   if (!user) {
     throw new AppError(404, "User not found")
@@ -23,7 +25,6 @@ const createCardService = async (id: string, {name, limit, type, dueDate, closin
    if (card) {
      throw new AppError(409, "Card already exist") 
    }
-
 
   if(type === "debit"){
 
@@ -62,7 +63,6 @@ const createCardService = async (id: string, {name, limit, type, dueDate, closin
   
   await cardRepository.save(newCard)
   
-
   const returingCard ={
     id:newCard.id,
     name :newCard.name  ,

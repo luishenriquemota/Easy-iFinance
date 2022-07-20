@@ -8,12 +8,10 @@ import listOneCardService from "../services/cards/listOneCard.service";
 import updateCardService from "../services/cards/updateCard.service";
 
 export const createCardController = async (req: Request, res: Response) => {
-  const id = req.user.id
-
+  const owner_id = req.user.id
   const {name, limit, type, dueDate, closingDate} = req.body
   
-  
-  const card = await createCardService(id, {name, limit, type, dueDate, closingDate})
+  const card = await createCardService(owner_id, {name, limit, type, dueDate, closingDate})
 
   return res.status(201).json(card);
   

@@ -3,55 +3,36 @@ import { User } from "../../entities/user.entity";
 import { Friendlist } from "../../entities/friendlist.entity";
 import { AppError } from "../../errors/appError";
 
-const addFriendService = async (friend_id: string, user_id: string) => {
-  const userRepository       = AppDataSource.getRepository(User);
+const addFriendService = async (user_id: string, friend_id: string) => {
+  const userRepository = AppDataSource.getRepository(User);
   const friendlistRepository = AppDataSource.getRepository(Friendlist);
 
-  const userById = await userRepository.findOneBy({
-    id: user_id,
-  });
+  const user = await userRepository.findOne({where: {id: user_id}, relations:['friendList']});
 
-  const friendById = await userRepository.findOneBy({
-    id: friend_id,
-  });
-  if (!userById || !friendById) {
-    throw new AppError(409, "User not found");
-  }
+  const friend = await userRepository.findOneBy({id: friend_id});
 
-  const friendship = new Friendlist();
-  friendship.user1.id = user_id;
-  friendship.user2.id = friend_id;
-  friendlistRepository.create(friendship);
+  if (!friend || !user) throw new AppError(404, "User not found.");
+
+  if(friend_id === user_id) throw new AppError(409,"you can't add yourself.")
+
+  const listFriends = Promise.all(
+    user.friendList.map(async (item) => {
+      const friendTable = await friendlistRepository.findOne({where: {id: item.id}, relations:['friend']})
+
+      return friendTable?.friend
+    })
+  )
+
+  const verifyFriendShip = (await listFriends).find(item => item?.id === friend_id)
+
+  if(verifyFriendShip) throw new AppError(404, "you and this user are already friends.")
+
+  const friendship = new Friendlist
+  friendship.user = user
+  friendship.friend = friend;
+
   await friendlistRepository.save(friendship);
 
-  return friendById?.name;
+  return friend?.name;
 };
-
 export default addFriendService;
-
-
-// const addFriendService = async (friend_id: string, user_id: string) => {
-//   const userRepository = AppDataSource.getRepository(User);
-//   const friendlistRepository = AppDataSource.getRepository(Friendlist);
-
-//   const userById = await userRepository.findOneBy({
-//     id: user_id,
-//   });
-
-//   const friendById = await userRepository.findOneBy({
-//     id: friend_id,
-//   });
-//   if (!userById || !friendById) {
-//     throw new AppError(409, "User not found");
-//   }
-
-//   const friendship = new Friendlist();
-//   friendship.user1.id = user_id;
-//   friendship.user2.id = friend_id;
-//   friendlistRepository.create(friendship);
-//   await friendlistRepository.save(friendship);
-
-//   return friendById?.name;
-// };
-
-// export default addFriendService;
