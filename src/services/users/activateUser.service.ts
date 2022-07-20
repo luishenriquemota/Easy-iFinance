@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/user.entity";
+import { AppError } from "../../errors/appError";
 
 const activateUserService = async (authToken: string): Promise<void> => {
 
@@ -14,7 +15,7 @@ const activateUserService = async (authToken: string): Promise<void> => {
     })
 
     if(!user){
-        throw new Error("User not found")
+        throw new AppError(404,"User not found")
     }
 
     await userRepository.update({
@@ -24,6 +25,7 @@ const activateUserService = async (authToken: string): Promise<void> => {
         authToken: ""
       }
     )
+    
 }
 
 export default activateUserService

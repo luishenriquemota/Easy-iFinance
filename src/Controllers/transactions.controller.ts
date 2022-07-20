@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import { AppError } from "../errors/appError"
 import createTransactionsService from "../services/transactions/createTransactions.service"
 import deleteTransactionService from "../services/transactions/deleteTransactions.service"
 import listCardTransactionsService from "../services/transactions/listCardTransactions.service"
@@ -8,7 +9,7 @@ import updateTransactionService from "../services/transactions/updateTransaction
 export const createTransactionsController = async (req:Request, res:Response) =>{
     const userData = req.body
     const {foundUser, foundCard } = req.user
-
+        
     const newUser = await createTransactionsService(foundUser!,foundCard!, userData)
 
     return res.status(201).json(newUser)
@@ -19,7 +20,7 @@ export const listTransactionsController = async  (req:Request, res:Response)=>{
 
     const userTransactions = await listTransactionsService(id)
 
-    return res.status(200).json(userTransactions)
+    return res.status(202).json(userTransactions)
     
 }
 export const listCardTransactionsController = async  (req:Request, res:Response)=>{
@@ -27,7 +28,7 @@ export const listCardTransactionsController = async  (req:Request, res:Response)
 
     const cardTransactions = await listCardTransactionsService(foundCard!)
 
-    return res.status(200).json(cardTransactions)
+    return res.status(202).json(cardTransactions)
     
 }
 
@@ -38,7 +39,7 @@ export const updateTransactionsController = async (req:Request, res:Response) =>
 
     const updatedTransaction = await updateTransactionService(foundUser!,transaction_id,updatedData)
 
-    return res.status(200).json(updatedTransaction)
+    return res.status(202).json(updatedTransaction)
 }
 
 export const deleteTransactionsController = async (req:Request, res:Response)=>{
@@ -47,5 +48,5 @@ export const deleteTransactionsController = async (req:Request, res:Response)=>{
 
     await deleteTransactionService(foundUser!,transaction_id)
 
-    return res.status(204)
+    return res.status(204).send()
 }

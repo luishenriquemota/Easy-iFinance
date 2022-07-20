@@ -1,4 +1,6 @@
 import {Request, Response} from "express";
+import { AppError } from "../errors/appError";
+import addToAllowedService from "../services/cards/addToAllowed.card.service";
 import createCardService from "../services/cards/createCard.service";
 import deleteCardService from "../services/cards/deleteCard.service";
 import listCardService from "../services/cards/listCards.service";
@@ -7,17 +9,14 @@ import updateCardService from "../services/cards/updateCard.service";
 
 export const createCardController = async (req: Request, res: Response) => {
   const id = req.user.id
-  
+
   const {name, limit, type, dueDate, closingDate} = req.body
+  
   
   const card = await createCardService(id, {name, limit, type, dueDate, closingDate})
 
-  if ( !name || !limit || !type) {
-    return res.status(400).json({
-      message: "Fields name, limit, type, dueDate and closingDate are required."
-  })}
-
   return res.status(201).json(card);
+  
 }
 
 
@@ -57,4 +56,14 @@ export const deleteCardController = async (req: Request, res: Response) => {
   await deleteCardService(owner_id, Number(card_id))
 
   return res.status(204).send()
+}
+
+export const addToallowController = async (req:Request, res:Response)=>{
+  const {foundCard, foundUser} = req.user
+  const {friend_id} = req.params
+
+
+  const allowedFriendAdded = await addToAllowedService(foundUser!,foundCard!,friend_id)
+
+  return res.status(201).json(allowedFriendAdded)
 }

@@ -1,9 +1,9 @@
 import { User } from "../../entities/user.entity"
 
 export interface ICardCreate {
-  name: string
-  limit: number
-  type: string
+  name?: string
+  limit?: number
+  type?: string
   dueDate?: Date
   closingDate?: Date
 }

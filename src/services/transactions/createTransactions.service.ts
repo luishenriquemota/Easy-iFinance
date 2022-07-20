@@ -8,6 +8,9 @@ import { ITransaction } from "../../interfaces/Transactions";
 
 
 const createTransactionsService = async (foundUser:User, foundCard:Card,{description,category,value, type}:ITransaction) => {
+    if(!description || !category ||!value|| !type ){
+        throw new AppError(400, "A transaction need a description, category, value and type")
+    }
     const transactionsRepository = AppDataSource.getRepository(Transactions)
 
     const newTransaction = new Transactions
@@ -25,6 +28,7 @@ const createTransactionsService = async (foundUser:User, foundCard:Card,{descrip
         description: newTransaction.description,
         value: newTransaction.value,
         type: newTransaction.type,
+        category:newTransaction.category,
         cardId: newTransaction.card.id,
         userId: newTransaction.user.id
     } 
