@@ -47,7 +47,7 @@ export class User {
   @OneToMany(type => Transactions, transactions => transactions.user, {eager: true})
   transactions?: Transactions[]
 
-  @OneToMany( type => Friendlist, (friendList) => friendList.user, {eager: true})
+  @OneToMany( type => Friendlist, friendList => friendList.user, {eager: true})
   @JoinTable()
   friendList: Friendlist[]
 }

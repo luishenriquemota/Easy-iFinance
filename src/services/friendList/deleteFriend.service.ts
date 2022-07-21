@@ -1,7 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Friendlist } from "../../entities/friendlist.entity";
 import { User } from "../../entities/user.entity";
-import { AppError } from "../../errors/appError";
 
 const deleteFriendService = async (friend_id: string, user_id: string) => {
   const userRepository = AppDataSource.getRepository(User);
@@ -9,27 +8,36 @@ const deleteFriendService = async (friend_id: string, user_id: string) => {
 
   const user = await userRepository.findOne({where:{id: user_id}, relations:['friendList']})
 
-  if(!user) return undefined
-  
-  
-  const friendsLists = await Promise.all(
-    user.friendList.map(async (list) => {
+    const friendsLists = Promise.all(
+    user!.friendList.map(async (list) => {
     const friendTable = await friendlistRepository.findOne({where:{id: list.id, friend:{id: friend_id}}, relations:['friend']})
-
-
-    if(!friendTable?.id) throw new AppError(404, "Not found")
-    
-    return friendTable.id
+      if(friendTable?.id){
+        return friendTable!.id
+      }
     })
   )
-  
-  if(friendsLists.length === 0) throw new AppError(404, "FriendList is empty")
-  
-  const findFriend = friendsLists.find(friend => friend.id === friend_id) 
 
-  friendsLists.forEach(async (item) => {
-  await friendlistRepository.delete({id: item})
-  })
+  const friendsLists2 = Promise.all(
+    user!.friendList.map(async (list) => {
+    const friendTable = await friendlistRepository.findOne({where:{id: list.id, user:{id: friend_id}}, relations:['user']})
+      if(friendTable?.id){
+        return friendTable!.id
+      }
+    })
+  )
 
+    const listId1 =  (await friendsLists).join("")
+    console.log(listId1)
+
+    const listId2 =  (await friendsLists2).join("")
+    console.log(listId2)
+
+    if(listId1){
+      await friendlistRepository.delete(listId1)
+    }
+
+    if(listId2){
+      await friendlistRepository.delete(listId2)
+    }
 };
 export default deleteFriendService;
